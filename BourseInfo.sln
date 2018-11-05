@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BourseInfo", "BourseInfo\BourseInfo.csproj", "{DA5BF7DF-BD59-4AE7-A891-A5A5ECB53B87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioManagement", "PortfolioManagement\PortfolioManagement.csproj", "{0EFA6D45-9328-4E75-8C4B-25751CB7E8E9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA5BF7DF-BD59-4AE7-A891-A5A5ECB53B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA5BF7DF-BD59-4AE7-A891-A5A5ECB53B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA5BF7DF-BD59-4AE7-A891-A5A5ECB53B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA5BF7DF-BD59-4AE7-A891-A5A5ECB53B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EFA6D45-9328-4E75-8C4B-25751CB7E8E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EFA6D45-9328-4E75-8C4B-25751CB7E8E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EFA6D45-9328-4E75-8C4B-25751CB7E8E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EFA6D45-9328-4E75-8C4B-25751CB7E8E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2692F47B-1892-4AED-ACEC-B2443DF13747}
+	EndGlobalSection
+EndGlobal
