@@ -349,7 +349,7 @@ namespace BourseInfo
             pictureBox1.UseWaitCursor = true;
 
             string stockId = dataGridView.Rows[e.RowIndex].Cells["idDataGridViewTextBoxColumn"].Value.ToString();
-            string imgUrl = string.Format("http://charting.vwdservices.com/tchart/tchart.aspx?user=Tijdnet&issue={0}&layout=2014&startdate=today&enddate=today&res=intraday&width=265&height=145&format=image/gif&culture=fr-BE&timestamp=10", stockId);
+            string imgUrl = string.Format("http://charting.vwdservices.com/tchart/tchart.aspx?user=Tijdnet&issue={0}&layout=gradient-v1&startdate=today&enddate=today&res=intraday&width=265&height=145&format=image/gif&culture=fr-BE", stockId);
             pictureBox1.Load(imgUrl);
             pictureBox1.Location = this.PointToClient(Cursor.Position);
             pictureBox1.Visible = true;
