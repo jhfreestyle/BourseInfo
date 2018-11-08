@@ -136,7 +136,7 @@ namespace BourseInfo
 
         private void BindControlClicks(Control con)
         {
-            con.MouseClick += delegate(object sender, MouseEventArgs e)
+            con.MouseClick += delegate (object sender, MouseEventArgs e)
             {
                 TriggerClicked(sender, e);
             };
@@ -148,7 +148,7 @@ namespace BourseInfo
             }
 
             // bind to controls added in the future
-            con.ControlAdded += delegate(object sender, ControlEventArgs e)
+            con.ControlAdded += delegate (object sender, ControlEventArgs e)
             {
                 BindControlClicks(e.Control);
             };

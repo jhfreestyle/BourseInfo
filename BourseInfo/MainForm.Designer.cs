@@ -31,13 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.buttonRefreshQuick = new System.Windows.Forms.Button();
+            this.buttonLoad = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isinDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pctDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stockBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataSet = new System.Data.DataSet();
             this.stocksNameTable = new System.Data.DataTable();
@@ -53,8 +48,14 @@
             this.toolStripMenuItemRemoveFromNotif = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTimer = new System.Windows.Forms.Timer(this.components);
             this.comboBoxTime = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonUpdate = new System.Windows.Forms.Button();
             this.label_valo = new System.Windows.Forms.Label();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isinDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Ticker = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pctDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
@@ -73,15 +74,15 @@
             this.textBox1.Size = new System.Drawing.Size(178, 20);
             this.textBox1.TabIndex = 1;
             // 
-            // buttonRefreshQuick
+            // buttonLoad
             // 
-            this.buttonRefreshQuick.Location = new System.Drawing.Point(11, 11);
-            this.buttonRefreshQuick.Name = "buttonRefreshQuick";
-            this.buttonRefreshQuick.Size = new System.Drawing.Size(88, 23);
-            this.buttonRefreshQuick.TabIndex = 2;
-            this.buttonRefreshQuick.Text = "Refresh Data";
-            this.buttonRefreshQuick.UseVisualStyleBackColor = true;
-            this.buttonRefreshQuick.Click += new System.EventHandler(this.buttonRefresh_Click);
+            this.buttonLoad.Location = new System.Drawing.Point(11, 11);
+            this.buttonLoad.Name = "buttonLoad";
+            this.buttonLoad.Size = new System.Drawing.Size(88, 23);
+            this.buttonLoad.TabIndex = 2;
+            this.buttonLoad.Text = "Load Data";
+            this.buttonLoad.UseVisualStyleBackColor = true;
+            this.buttonLoad.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // dataGridView
             // 
@@ -93,6 +94,7 @@
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
             this.isinDataGridViewTextBoxColumn,
+            this.Ticker,
             this.nameDataGridViewTextBoxColumn,
             this.valueDataGridViewTextBoxColumn,
             this.pctDataGridViewTextBoxColumn});
@@ -106,41 +108,6 @@
             this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellDoubleClick);
             this.dataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView_CellFormatting);
             this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDown);
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // isinDataGridViewTextBoxColumn
-            // 
-            this.isinDataGridViewTextBoxColumn.DataPropertyName = "Isin";
-            this.isinDataGridViewTextBoxColumn.HeaderText = "Isin";
-            this.isinDataGridViewTextBoxColumn.Name = "isinDataGridViewTextBoxColumn";
-            this.isinDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // valueDataGridViewTextBoxColumn
-            // 
-            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-            this.valueDataGridViewTextBoxColumn.HeaderText = "Value";
-            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
-            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // pctDataGridViewTextBoxColumn
-            // 
-            this.pctDataGridViewTextBoxColumn.DataPropertyName = "Pct";
-            this.pctDataGridViewTextBoxColumn.HeaderText = "Pct";
-            this.pctDataGridViewTextBoxColumn.Name = "pctDataGridViewTextBoxColumn";
-            this.pctDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // stockBindingSource
             // 
@@ -252,15 +219,15 @@
             this.comboBoxTime.TabIndex = 7;
             this.comboBoxTime.SelectedIndexChanged += new System.EventHandler(this.comboBoxTime_SelectedIndexChanged);
             // 
-            // button1
+            // buttonUpdate
             // 
-            this.button1.Location = new System.Drawing.Point(105, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Update Data";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.refreshSelectedStockList);
+            this.buttonUpdate.Location = new System.Drawing.Point(105, 12);
+            this.buttonUpdate.Name = "buttonUpdate";
+            this.buttonUpdate.Size = new System.Drawing.Size(88, 23);
+            this.buttonUpdate.TabIndex = 8;
+            this.buttonUpdate.Text = "Update Data";
+            this.buttonUpdate.UseVisualStyleBackColor = true;
+            this.buttonUpdate.Click += new System.EventHandler(this.refreshSelectedStockList);
             // 
             // label_valo
             // 
@@ -272,18 +239,70 @@
             this.label_valo.Text = "0.00 €";
             this.label_valo.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
+            this.idDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // isinDataGridViewTextBoxColumn
+            // 
+            this.isinDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.isinDataGridViewTextBoxColumn.DataPropertyName = "Isin";
+            this.isinDataGridViewTextBoxColumn.HeaderText = "Isin";
+            this.isinDataGridViewTextBoxColumn.Name = "isinDataGridViewTextBoxColumn";
+            this.isinDataGridViewTextBoxColumn.ReadOnly = true;
+            this.isinDataGridViewTextBoxColumn.Width = 48;
+            // 
+            // Ticker
+            // 
+            this.Ticker.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Ticker.DataPropertyName = "Ticker";
+            this.Ticker.HeaderText = "Ticker";
+            this.Ticker.Name = "Ticker";
+            this.Ticker.ReadOnly = true;
+            this.Ticker.Width = 62;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // valueDataGridViewTextBoxColumn
+            // 
+            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+            this.valueDataGridViewTextBoxColumn.HeaderText = "Value";
+            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
+            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
+            this.valueDataGridViewTextBoxColumn.Width = 59;
+            // 
+            // pctDataGridViewTextBoxColumn
+            // 
+            this.pctDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.pctDataGridViewTextBoxColumn.DataPropertyName = "Pct";
+            this.pctDataGridViewTextBoxColumn.HeaderText = "Pct";
+            this.pctDataGridViewTextBoxColumn.Name = "pctDataGridViewTextBoxColumn";
+            this.pctDataGridViewTextBoxColumn.ReadOnly = true;
+            this.pctDataGridViewTextBoxColumn.Width = 48;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 438);
             this.Controls.Add(this.label_valo);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonUpdate);
             this.Controls.Add(this.comboBoxTime);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.companyNb);
             this.Controls.Add(this.dataGridView);
-            this.Controls.Add(this.buttonRefreshQuick);
+            this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.textBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
@@ -304,7 +323,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button buttonRefreshQuick;
+        private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Data.DataSet dataSet;
         private System.Data.DataTable stocksNameTable;
@@ -321,13 +340,14 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRemoveFromNotif;
         private System.Data.DataTable StocksInNotifTable;
         private System.Data.DataColumn IdColumn;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonUpdate;
+        private System.Windows.Forms.Label label_valo;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn isinDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Ticker;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn pctDataGridViewTextBoxColumn;
-        private System.Windows.Forms.Label label_valo;
     }
 }
 
