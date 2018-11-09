@@ -9,3 +9,5 @@
 /BourseInfo/obj
 *.suo
 /.vs/BourseInfo
+/BourseInfoTests/bin/Debug
+/BourseInfoTests/obj/Debug

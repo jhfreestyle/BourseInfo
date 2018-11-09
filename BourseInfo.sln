@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BourseInfo", "BourseInfo\Bo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioManagement", "PortfolioManagement\PortfolioManagement.csproj", "{0EFA6D45-9328-4E75-8C4B-25751CB7E8E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BourseInfoTests", "BourseInfoTests\BourseInfoTests.csproj", "{0579DAB4-E109-481B-B360-8D426356ED69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0EFA6D45-9328-4E75-8C4B-25751CB7E8E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EFA6D45-9328-4E75-8C4B-25751CB7E8E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EFA6D45-9328-4E75-8C4B-25751CB7E8E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0579DAB4-E109-481B-B360-8D426356ED69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0579DAB4-E109-481B-B360-8D426356ED69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0579DAB4-E109-481B-B360-8D426356ED69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0579DAB4-E109-481B-B360-8D426356ED69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
