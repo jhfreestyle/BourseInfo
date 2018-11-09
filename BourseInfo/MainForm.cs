@@ -29,7 +29,7 @@ namespace BourseInfo
         private const int RequestTimeout = 20000;
         private const string LogFilePath = @"log.txt";
 
-        private readonly List<String> jsonUrls = new List<String>
+        public readonly List<String> JsonUrls = new List<String>
         {
             // euronext, alternext, cac40, eurolist
             "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.marchelibre/issues.json?pageSize=300",
@@ -79,7 +79,7 @@ namespace BourseInfo
 
         }
 
-        private string getHttpResponse(string url)
+        public string getHttpResponse(string url)
         {
             string result = null;
             for (int i = 1; i <= NumberOfRetries; ++i)
@@ -221,7 +221,7 @@ namespace BourseInfo
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-                foreach (var url in jsonUrls)
+                foreach (var url in JsonUrls)
                 {
                     try
                     {
