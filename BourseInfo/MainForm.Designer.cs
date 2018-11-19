@@ -52,7 +52,7 @@
             this.label_valo = new System.Windows.Forms.Label();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isinDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ticker = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tickerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pctDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -94,7 +94,7 @@
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
             this.isinDataGridViewTextBoxColumn,
-            this.Ticker,
+            this.tickerDataGridViewTextBoxColumn,
             this.nameDataGridViewTextBoxColumn,
             this.valueDataGridViewTextBoxColumn,
             this.pctDataGridViewTextBoxColumn});
@@ -256,14 +256,14 @@
             this.isinDataGridViewTextBoxColumn.ReadOnly = true;
             this.isinDataGridViewTextBoxColumn.Width = 48;
             // 
-            // Ticker
+            // tickerDataGridViewTextBoxColumn
             // 
-            this.Ticker.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Ticker.DataPropertyName = "Ticker";
-            this.Ticker.HeaderText = "Ticker";
-            this.Ticker.Name = "Ticker";
-            this.Ticker.ReadOnly = true;
-            this.Ticker.Width = 62;
+            this.tickerDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.tickerDataGridViewTextBoxColumn.DataPropertyName = "Ticker";
+            this.tickerDataGridViewTextBoxColumn.HeaderText = "Ticker";
+            this.tickerDataGridViewTextBoxColumn.Name = "tickerDataGridViewTextBoxColumn";
+            this.tickerDataGridViewTextBoxColumn.ReadOnly = true;
+            this.tickerDataGridViewTextBoxColumn.Width = 62;
             // 
             // nameDataGridViewTextBoxColumn
             // 
@@ -344,7 +344,7 @@
         private System.Windows.Forms.Label label_valo;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn isinDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Ticker;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tickerDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn pctDataGridViewTextBoxColumn;
