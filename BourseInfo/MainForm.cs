@@ -370,17 +370,17 @@ namespace BourseInfo
                     //TestCEvsDWHGenerateSQLQueryToolStripMenuItem.Text = "x=" + e.X + " y=" + e.Y + " row=" + e.RowIndex + " col=" + e.ColumnIndex;
                     //TestCEvsDWHDataGridView.Focus();
                     // we save the "id" column of the selected row to retrieve the id when clicking on the context menu).
-                    dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["idDataGridViewTextBoxColumn"];
+                    dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex].Cells["isinDataGridViewTextBoxColumn"];
                 }
         }
 
         private void toolStripMenuItemAddToNotif_Click(object sender, EventArgs e)
         {
-            string clickedStockId = dataGridView.CurrentCell.Value.ToString();
+            string clickedStockIsin = dataGridView.CurrentCell.Value.ToString();
 
             foreach (Stock s in _stockList)
             {
-                if (s.Id == clickedStockId)
+                if (s.Isin == clickedStockIsin)
                 {
                     _notificationWindow.AddStock(s.Id);
                     _notificationWindow.RefreshContent(_stockList);
