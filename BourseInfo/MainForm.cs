@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -24,6 +25,7 @@ namespace BourseInfo
     {
         private NotificationWindow _notificationWindow;
         private List<Stock> _stockList;
+        private DataTable dataTable;
         private const int NumberOfRetries = 1;
         private const int DelayOnRetry = 10000; // in milliseconds
         private const int RequestTimeout = 20000;
@@ -38,11 +40,23 @@ namespace BourseInfo
             "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compa/issues.json?sort=issue.fullName,asc&pageSize=300",
             "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compb/issues.json?sort=issue.fullName,asc&pageSize=300",
             "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compc/issues.json?sort=issue.fullName,asc&pageSize=300",
-        }; 
+        };
 
         public MainForm()
         {
             InitializeComponent();
+
+            CultureInfo info = new CultureInfo("fr-FR");
+            Thread.CurrentThread.CurrentCulture = info;
+
+            dataTable = new DataTable();
+            dataTable.Columns.Add("Id");
+            dataTable.Columns.Add("Isin");
+            dataTable.Columns.Add("Name");
+            dataTable.Columns.Add("Ticker");
+            dataTable.Columns.Add("Value", typeof(decimal));
+            dataTable.Columns.Add("Pct", typeof(decimal));
+
             LoadFile();
 
             myNotifyIcon.Visible = false;
@@ -51,7 +65,7 @@ namespace BourseInfo
             List<String> idList = new List<String>();
             foreach (DataRow r in StocksInNotifTable.Rows)
             {
-               idList.Add(r["Id"].ToString());
+                idList.Add(r["Id"].ToString());
             }
             _notificationWindow = new NotificationWindow(idList, this);
 
@@ -60,11 +74,11 @@ namespace BourseInfo
 
         private void InitializeComboBoxTime()
         {
-                        comboBoxTime.DisplayMember = "Text";
-                        comboBoxTime.ValueMember = "Value";
+            comboBoxTime.DisplayMember = "Text";
+            comboBoxTime.ValueMember = "Value";
 
-                        comboBoxTime.DataSource = new[]
-            {
+            comboBoxTime.DataSource = new[]
+{
                 new { Text = "Refresh time", Value = "0" }, // 0 = no refresh
                 new { Text = "30s", Value = "30" },
                 new { Text = "45s", Value = "45" },
@@ -75,7 +89,7 @@ namespace BourseInfo
                 new { Text = "5m", Value = "300" },
                 new { Text = "10m", Value = "600" },
             };
-                        comboBoxTime.SelectedIndex = 0;
+            comboBoxTime.SelectedIndex = 0;
 
         }
 
@@ -146,7 +160,7 @@ namespace BourseInfo
             p.Ledger.Add(new Transaction(s1, 100, 2));
             p.Ledger.Add(new Transaction(s2, 200, 1));
 
-            label_valo.Text = p.GetPortfolioValue() + " €";
+            label_valo.Text = p.GetPortfolioValue().ToString("C");
         }
 
         private void refreshOneStock(string id)
@@ -167,7 +181,7 @@ namespace BourseInfo
                 currentStock.Pct = updatedStock.dayChangePercentage;
             }
 
-            textBox1.Text = updatedStock.updatedOn + "\r\n";
+            textBoxLastUpdate.Text = updatedStock.updatedOn + "\r\n";
 
             stopWatch.Stop();
             Debug.Print($"Update executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
@@ -198,7 +212,7 @@ namespace BourseInfo
                 if (updatedStock.updatedOn > lastUpdateDate) lastUpdateDate = updatedStock.updatedOn;
             }
 
-            textBox1.Text = lastUpdateDate + "\r\n";
+            textBoxLastUpdate.Text = lastUpdateDate + "\r\n";
             stopWatch.Stop();
             Debug.Print($"Update executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
         }
@@ -237,9 +251,15 @@ namespace BourseInfo
                 Debug.Print($"Loading executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
 
                 _stockList = _stockList.OrderBy(o => o.Name).ToList();
-                stockBindingSource.DataSource = _stockList;
 
-                companyNb.Text = _stockList.Count + " companies listed";
+                dataTable.Clear();
+                foreach (var s in _stockList)
+                {
+                    dataTable.Rows.Add(s.Id, s.Isin, s.Name, s.Ticker, s.Value, 0.5);
+                }
+                stockBindingSource.DataSource = dataTable;
+
+                refreshNbCompany();
             }
             catch (Exception ex)
             {
@@ -254,7 +274,7 @@ namespace BourseInfo
             {
                 dynamic json = JObject.Parse(res);
 
-                textBox1.Text = json.values.lastTime + "\r\n";
+                textBoxLastUpdate.Text = json.values.lastTime + "\r\n";
 
                 foreach (var item in json.embedded.issues)
                 {
@@ -289,7 +309,7 @@ namespace BourseInfo
         {
             if (e.ColumnIndex == dataGridView.Columns["pctDataGridViewTextBoxColumn"].Index)
             {
-                if ((Decimal) dataGridView.Rows[e.RowIndex].Cells["pctDataGridViewTextBoxColumn"].Value > 0)
+                if ((Decimal)dataGridView.Rows[e.RowIndex].Cells["pctDataGridViewTextBoxColumn"].Value > 0)
                     e.CellStyle.ForeColor = Color.LawnGreen;
                 else
                 {
@@ -302,8 +322,8 @@ namespace BourseInfo
         {
             string filePath = "data.xml";
             dataSet.WriteXml(filePath);
-        }      
-        
+        }
+
         private void LoadFile()
         {
             dataSet.Tables.ToString();
@@ -402,10 +422,10 @@ namespace BourseInfo
 
         public void RemoveStockFromNotif(string idToRemove)
         {
-                    _notificationWindow.RemoveStock(idToRemove);
-                    _notificationWindow.RefreshContent(_stockList);
+            _notificationWindow.RemoveStock(idToRemove);
+            _notificationWindow.RefreshContent(_stockList);
 
-                    DeleteRowInStocksInNotifTable(idToRemove);
+            DeleteRowInStocksInNotifTable(idToRemove);
         }
 
         private void DeleteRowInStocksInNotifTable(string rowId)
@@ -418,7 +438,7 @@ namespace BourseInfo
                     StocksInNotifTable.Rows.Remove(r);
                 }
             }
-            SaveFile();            
+            SaveFile();
 
         }
 
@@ -444,10 +464,10 @@ namespace BourseInfo
 
         public void LogException(Exception ex, string url = null)
         {
-                if (!string.IsNullOrEmpty(url))
-                    Log(DateTime.Now + " Error loading " + url + ": " + ex.Message + Environment.NewLine);
-                else
-                    Log(DateTime.Now + " Error: " + ex.Message + Environment.NewLine + "StackTrace: " + ex.StackTrace + Environment.NewLine + Environment.NewLine);
+            if (!string.IsNullOrEmpty(url))
+                Log(DateTime.Now + " Error loading " + url + ": " + ex.Message + Environment.NewLine);
+            else
+                Log(DateTime.Now + " Error: " + ex.Message + Environment.NewLine + "StackTrace: " + ex.StackTrace + Environment.NewLine + Environment.NewLine);
         }
 
         public void Log(string message)
@@ -458,5 +478,40 @@ namespace BourseInfo
             }
         }
 
+        private void textBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (!textBoxSearch.Text.Equals("Type to search..."))
+            {
+                textBoxSearch.ResetForeColor();
+                stockBindingSource.Filter = "Name LIKE '%" + textBoxSearch.Text + "%' OR Ticker LIKE '%" +
+                                            textBoxSearch.Text + "%'";
+                refreshNbCompany();
+            }
+        }
+
+        private void textBoxSearch_Enter(object sender, EventArgs e)
+        {
+            if (textBoxSearch.Text.Equals("Type to search..."))
+            {
+                textBoxSearch.Text = "";
+            }
+        }
+
+        private void textBoxSearch_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxSearch.Text))
+            {
+                textBoxSearch.Text = "Type to search...";
+                textBoxSearch.ForeColor = Color.Gray;
+            }
+        }
+
+        private void refreshNbCompany()
+        {
+            if (stockBindingSource.Count > 1)
+                companyNb.Text = stockBindingSource.Count + " companies";
+            else
+                companyNb.Text = stockBindingSource.Count + " company";
+        }
     }
 }

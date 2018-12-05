@@ -30,9 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxLastUpdate = new System.Windows.Forms.TextBox();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isinDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tickerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pctDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stockBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataSet = new System.Data.DataSet();
             this.stocksNameTable = new System.Data.DataTable();
@@ -50,12 +56,7 @@
             this.comboBoxTime = new System.Windows.Forms.ComboBox();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.label_valo = new System.Windows.Forms.Label();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isinDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tickerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pctDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
@@ -65,14 +66,14 @@
             this.dataGridContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox1
+            // textBoxLastUpdate
             // 
-            this.textBox1.Location = new System.Drawing.Point(277, 41);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(178, 20);
-            this.textBox1.TabIndex = 1;
+            this.textBoxLastUpdate.Location = new System.Drawing.Point(292, 13);
+            this.textBoxLastUpdate.Name = "textBoxLastUpdate";
+            this.textBoxLastUpdate.ReadOnly = true;
+            this.textBoxLastUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxLastUpdate.Size = new System.Drawing.Size(164, 20);
+            this.textBoxLastUpdate.TabIndex = 1;
             // 
             // buttonLoad
             // 
@@ -108,6 +109,58 @@
             this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellDoubleClick);
             this.dataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView_CellFormatting);
             this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDown);
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
+            this.idDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // isinDataGridViewTextBoxColumn
+            // 
+            this.isinDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.isinDataGridViewTextBoxColumn.DataPropertyName = "Isin";
+            this.isinDataGridViewTextBoxColumn.HeaderText = "Isin";
+            this.isinDataGridViewTextBoxColumn.Name = "isinDataGridViewTextBoxColumn";
+            this.isinDataGridViewTextBoxColumn.ReadOnly = true;
+            this.isinDataGridViewTextBoxColumn.Width = 48;
+            // 
+            // tickerDataGridViewTextBoxColumn
+            // 
+            this.tickerDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.tickerDataGridViewTextBoxColumn.DataPropertyName = "Ticker";
+            this.tickerDataGridViewTextBoxColumn.HeaderText = "Ticker";
+            this.tickerDataGridViewTextBoxColumn.Name = "tickerDataGridViewTextBoxColumn";
+            this.tickerDataGridViewTextBoxColumn.ReadOnly = true;
+            this.tickerDataGridViewTextBoxColumn.Width = 62;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // valueDataGridViewTextBoxColumn
+            // 
+            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+            this.valueDataGridViewTextBoxColumn.HeaderText = "Value";
+            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
+            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
+            this.valueDataGridViewTextBoxColumn.Width = 59;
+            // 
+            // pctDataGridViewTextBoxColumn
+            // 
+            this.pctDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.pctDataGridViewTextBoxColumn.DataPropertyName = "Pct";
+            this.pctDataGridViewTextBoxColumn.HeaderText = "Pct";
+            this.pctDataGridViewTextBoxColumn.Name = "pctDataGridViewTextBoxColumn";
+            this.pctDataGridViewTextBoxColumn.ReadOnly = true;
+            this.pctDataGridViewTextBoxColumn.Width = 48;
             // 
             // stockBindingSource
             // 
@@ -164,12 +217,12 @@
             // 
             // companyNb
             // 
-            this.companyNb.Location = new System.Drawing.Point(331, 16);
+            this.companyNb.Location = new System.Drawing.Point(292, 43);
             this.companyNb.Margin = new System.Windows.Forms.Padding(0);
             this.companyNb.Name = "companyNb";
-            this.companyNb.Size = new System.Drawing.Size(126, 18);
+            this.companyNb.Size = new System.Drawing.Size(163, 18);
             this.companyNb.TabIndex = 5;
-            this.companyNb.Text = "0 company listed";
+            this.companyNb.Text = "0 company";
             this.companyNb.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // pictureBox1
@@ -213,7 +266,7 @@
             // 
             this.comboBoxTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTime.FormattingEnabled = true;
-            this.comboBoxTime.Location = new System.Drawing.Point(12, 40);
+            this.comboBoxTime.Location = new System.Drawing.Point(199, 13);
             this.comboBoxTime.Name = "comboBoxTime";
             this.comboBoxTime.Size = new System.Drawing.Size(87, 21);
             this.comboBoxTime.TabIndex = 7;
@@ -221,7 +274,7 @@
             // 
             // buttonUpdate
             // 
-            this.buttonUpdate.Location = new System.Drawing.Point(105, 12);
+            this.buttonUpdate.Location = new System.Drawing.Point(105, 11);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(88, 23);
             this.buttonUpdate.TabIndex = 8;
@@ -231,71 +284,32 @@
             // 
             // label_valo
             // 
-            this.label_valo.Location = new System.Drawing.Point(196, 16);
+            this.label_valo.Location = new System.Drawing.Point(199, 43);
             this.label_valo.Margin = new System.Windows.Forms.Padding(0);
             this.label_valo.Name = "label_valo";
-            this.label_valo.Size = new System.Drawing.Size(135, 18);
+            this.label_valo.Size = new System.Drawing.Size(87, 18);
             this.label_valo.TabIndex = 9;
             this.label_valo.Text = "0.00 €";
             this.label_valo.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // idDataGridViewTextBoxColumn
+            // textBoxSearch
             // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // isinDataGridViewTextBoxColumn
-            // 
-            this.isinDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.isinDataGridViewTextBoxColumn.DataPropertyName = "Isin";
-            this.isinDataGridViewTextBoxColumn.HeaderText = "Isin";
-            this.isinDataGridViewTextBoxColumn.Name = "isinDataGridViewTextBoxColumn";
-            this.isinDataGridViewTextBoxColumn.ReadOnly = true;
-            this.isinDataGridViewTextBoxColumn.Width = 48;
-            // 
-            // tickerDataGridViewTextBoxColumn
-            // 
-            this.tickerDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.tickerDataGridViewTextBoxColumn.DataPropertyName = "Ticker";
-            this.tickerDataGridViewTextBoxColumn.HeaderText = "Ticker";
-            this.tickerDataGridViewTextBoxColumn.Name = "tickerDataGridViewTextBoxColumn";
-            this.tickerDataGridViewTextBoxColumn.ReadOnly = true;
-            this.tickerDataGridViewTextBoxColumn.Width = 62;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // valueDataGridViewTextBoxColumn
-            // 
-            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-            this.valueDataGridViewTextBoxColumn.HeaderText = "Value";
-            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
-            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
-            this.valueDataGridViewTextBoxColumn.Width = 59;
-            // 
-            // pctDataGridViewTextBoxColumn
-            // 
-            this.pctDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.pctDataGridViewTextBoxColumn.DataPropertyName = "Pct";
-            this.pctDataGridViewTextBoxColumn.HeaderText = "Pct";
-            this.pctDataGridViewTextBoxColumn.Name = "pctDataGridViewTextBoxColumn";
-            this.pctDataGridViewTextBoxColumn.ReadOnly = true;
-            this.pctDataGridViewTextBoxColumn.Width = 48;
+            this.textBoxSearch.ForeColor = System.Drawing.Color.Gray;
+            this.textBoxSearch.Location = new System.Drawing.Point(13, 40);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(180, 20);
+            this.textBoxSearch.TabIndex = 10;
+            this.textBoxSearch.Text = "Type to search...";
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
+            this.textBoxSearch.Enter += new System.EventHandler(this.textBoxSearch_Enter);
+            this.textBoxSearch.Leave += new System.EventHandler(this.textBoxSearch_Leave);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 438);
+            this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.label_valo);
             this.Controls.Add(this.buttonUpdate);
             this.Controls.Add(this.comboBoxTime);
@@ -303,7 +317,7 @@
             this.Controls.Add(this.companyNb);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.buttonLoad);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxLastUpdate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "InfoBourse - By Jean";
@@ -322,7 +336,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxLastUpdate;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Data.DataSet dataSet;
@@ -348,6 +362,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn pctDataGridViewTextBoxColumn;
+        private System.Windows.Forms.TextBox textBoxSearch;
     }
 }
 
