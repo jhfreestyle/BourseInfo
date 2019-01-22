@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PortfolioManagement;
+using Utils;
 
 
 namespace BourseInfo
@@ -33,6 +34,8 @@ namespace BourseInfo
 
         public readonly List<String> JsonUrls = new List<String>
         {
+            // Indices
+            "https://lesechos-bourse-fo-cdn.wlb.aw.atos.net/streaming/cours/getHeaderBourse",
             // euronext, alternext, cac40, eurolist
             "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.marchelibre/issues.json?pageSize=300",
             "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.alternext.mlst/issues.json?pageSize=300",
@@ -155,8 +158,8 @@ namespace BourseInfo
         {
             Portfolio p = new Portfolio();
             p.Ledger = new List<Transaction>();
-            Stock s1 = _stockList.First(s => s.Name == "Claranova");
-            Stock s2 = _stockList.First(s => s.Name == "Lagardère");
+            Stock s1 = _stockList.FirstOrDefault(s => s.Name == "Claranova");
+            Stock s2 = _stockList.FirstOrDefault(s => s.Name == "Lagardère");
             p.Ledger.Add(new Transaction(s1, 100, 2));
             p.Ledger.Add(new Transaction(s2, 200, 1));
 
@@ -255,7 +258,7 @@ namespace BourseInfo
                 dataTable.Clear();
                 foreach (var s in _stockList)
                 {
-                    dataTable.Rows.Add(s.Id, s.Isin, s.Name, s.Ticker, s.Value, 0.5);
+                    dataTable.Rows.Add(s.Id, s.Isin, s.Name, s.Ticker, s.Value, s.Pct );
                 }
                 stockBindingSource.DataSource = dataTable;
 
@@ -274,32 +277,41 @@ namespace BourseInfo
             {
                 dynamic json = JObject.Parse(res);
 
-                textBoxLastUpdate.Text = json.values.lastTime + "\r\n";
+                textBoxLastUpdate.Text = json.values?.lastTime + "\r\n";
 
-                foreach (var item in json.embedded.issues)
+                var items = json.embedded?.issues;
+
+                if (items != null)
                 {
-                    string id = GetStockId(item.urn.ToString());
-
-                    bool found = false;
-                    foreach (var s in _stockList)
+                    foreach (var item in items)
                     {
-                        if (s.Id == id)
-                            found = true; // dont add twice the same
-                    }
+                        string id = GetStockId(item.urn.ToString());
 
-                    if (!found) // add item
-                    {
-                        Stock stock = new Stock
+                        bool found = false;
+                        foreach (var s in _stockList)
                         {
-                            Id = id,
-                            Isin = item.isinCode,
-                            Name = item.fullName._default,
-                            Ticker = item.ticker,
-                            Value = item.values.lastPrice == null ? -100 : item.values.lastPrice,
-                            Pct = item.values.dayChangePercentage == null ? -100 : item.values.dayChangePercentage
-                        };
+                            if (s.Id == id)
+                                found = true; // dont add twice the same
+                        }
 
-                        _stockList.Add(stock);
+                        if (!found) // add item
+                        {
+                            Stock stock = new Stock
+                                              {
+                                                  Id = id,
+                                                  Isin = item.isinCode,
+                                                  Name = item.fullName._default,
+                                                  Ticker = item.ticker,
+                                                  Value = item.values.lastPrice == null ? -1 : item.values.lastPrice,
+                                                  Pct = item.values.dayChangePercentage == null
+                                                            ? -1
+                                                            : item.values.dayChangePercentage,
+                                                  Info = item.ToString()
+                                              };
+
+                            _stockList.Add(stock);
+
+                        }
                     }
                 }
             }
@@ -307,7 +319,8 @@ namespace BourseInfo
 
         private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.ColumnIndex == dataGridView.Columns["pctDataGridViewTextBoxColumn"].Index)
+            if (e.ColumnIndex == dataGridView.Columns["pctDataGridViewTextBoxColumn"].Index 
+                && dataGridView.Rows[e.RowIndex].Cells["pctDataGridViewTextBoxColumn"].Value != null)
             {
                 if ((Decimal)dataGridView.Rows[e.RowIndex].Cells["pctDataGridViewTextBoxColumn"].Value > 0)
                     e.CellStyle.ForeColor = Color.LawnGreen;
@@ -366,16 +379,19 @@ namespace BourseInfo
 
         private void dataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            pictureBox1.UseWaitCursor = true;
+            if (e.RowIndex >= 0)
+            {
+                pictureBox1.UseWaitCursor = true;
 
-            string stockId = dataGridView.Rows[e.RowIndex].Cells["idDataGridViewTextBoxColumn"].Value.ToString();
-            string imgUrl = string.Format("http://charting.vwdservices.com/tchart/tchart.aspx?user=Tijdnet&issue={0}&layout=gradient-v1&startdate=today&enddate=today&res=intraday&width=265&height=145&format=image/gif&culture=fr-BE", stockId);
-            pictureBox1.Load(imgUrl);
-            pictureBox1.Location = this.PointToClient(Cursor.Position);
-            pictureBox1.Visible = true;
+                string stockId = dataGridView.Rows[e.RowIndex].Cells["idDataGridViewTextBoxColumn"].Value.ToString();
+                string imgUrl = string.Format("http://charting.vwdservices.com/tchart/tchart.aspx?user=Tijdnet&issue={0}&layout=gradient-v1&startdate=today&enddate=today&res=intraday&width=265&height=145&format=image/gif&culture=fr-BE", stockId);
+                pictureBox1.Load(imgUrl);
+                pictureBox1.Location = this.PointToClient(Cursor.Position);
+                pictureBox1.Visible = true;
 
-            pictureBox1.UseWaitCursor = false;
-            Debug.WriteLine("ImgUrl:" + imgUrl);
+                pictureBox1.UseWaitCursor = false;
+                Debug.WriteLine("ImgUrl:" + imgUrl);
+            }
         }
 
         private void dataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
@@ -483,8 +499,8 @@ namespace BourseInfo
             if (!textBoxSearch.Text.Equals("Type to search..."))
             {
                 textBoxSearch.ResetForeColor();
-                stockBindingSource.Filter = "Name LIKE '%" + textBoxSearch.Text + "%' OR Ticker LIKE '%" +
-                                            textBoxSearch.Text + "%'";
+                //stockBindingSource.DataSource = _stockList.Where(s => s.Name.Contains(textBoxSearch.Text)).ToList();
+                stockBindingSource.Filter = "Name LIKE '%" + textBoxSearch.Text + "%' OR Ticker LIKE '%" + textBoxSearch.Text + "%' OR Isin LIKE '%" + textBoxSearch.Text + "%'";
                 refreshNbCompany();
             }
         }
