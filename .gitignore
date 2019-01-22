@@ -5,13 +5,23 @@
 
 /PortfolioManagement/bin
 /PortfolioManagement/obj
+
+/PortfolioManagementTests/bin
+/PortfolioManagementTests/obj
+
+/BourseInfoTests/bin
+/BourseInfoTests/obj
+
+/Utils/bin
+/Utils/obj
+
 /BourseInfo/bin/Debug
 /BourseInfo/bin/Release/*
 # do not ignore exe and dll in Release
 !/BourseInfo/bin/Release/BourseInfo.exe
 !/BourseInfo/bin/Release/*.dll
 /BourseInfo/obj
+
 *.suo
 /.vs/BourseInfo
-/BourseInfoTests/bin
-/BourseInfoTests/obj
+

@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioManagement", "Port
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BourseInfoTests", "BourseInfoTests\BourseInfoTests.csproj", "{0579DAB4-E109-481B-B360-8D426356ED69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioManagementTests", "PortfolioManagementTests\PortfolioManagementTests.csproj", "{E7507210-B3F2-4D4F-88E7-63CC58E65A76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{581AFBD6-EB9D-4736-8ECE-AA142A1C7A05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{0579DAB4-E109-481B-B360-8D426356ED69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0579DAB4-E109-481B-B360-8D426356ED69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0579DAB4-E109-481B-B360-8D426356ED69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7507210-B3F2-4D4F-88E7-63CC58E65A76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7507210-B3F2-4D4F-88E7-63CC58E65A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7507210-B3F2-4D4F-88E7-63CC58E65A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7507210-B3F2-4D4F-88E7-63CC58E65A76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{581AFBD6-EB9D-4736-8ECE-AA142A1C7A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{581AFBD6-EB9D-4736-8ECE-AA142A1C7A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{581AFBD6-EB9D-4736-8ECE-AA142A1C7A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{581AFBD6-EB9D-4736-8ECE-AA142A1C7A05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
