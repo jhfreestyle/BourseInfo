@@ -3,12 +3,14 @@ using System.Windows.Forms;
 
 namespace BourseInfo
 {
+    using System.ComponentModel;
+
     partial class NotificationWindow
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -20,6 +22,7 @@ namespace BourseInfo
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -38,47 +41,43 @@ namespace BourseInfo
             this.openBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripNotif.SuspendLayout();
             this.SuspendLayout();
-            // 
+
             // tableLayoutPanel
-            // 
             this.tableLayoutPanel.AutoSize = true;
             this.tableLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel.ColumnCount = 1;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.ColumnStyles.Add(
+                new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.RowStyles.Add(
+                new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(250, 20);
             this.tableLayoutPanel.TabIndex = 2;
-            // 
+
             // contextMenuStripNotif
-            // 
-            this.contextMenuStripNotif.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeToolStripMenuItem,
-            this.openBrowserToolStripMenuItem});
+            this.contextMenuStripNotif.Items.AddRange(
+                new ToolStripItem[] { this.removeToolStripMenuItem, this.openBrowserToolStripMenuItem });
             this.contextMenuStripNotif.Name = "contextMenuStripNotif";
             this.contextMenuStripNotif.Size = new System.Drawing.Size(237, 48);
-            // 
+
             // removeToolStripMenuItem
-            // 
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.removeToolStripMenuItem.Text = "Remove";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
-            // 
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.RemoveToolStripMenuItemClick);
+
             // openBrowserToolStripMenuItem
-            // 
             this.openBrowserToolStripMenuItem.Name = "openBrowserToolStripMenuItem";
             this.openBrowserToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.openBrowserToolStripMenuItem.Text = "Open in browser (Boursorama)";
-            this.openBrowserToolStripMenuItem.Click += new System.EventHandler(this.openBrowserToolStripMenuItem_Click);
-            // 
+            this.openBrowserToolStripMenuItem.Click += new System.EventHandler(this.OpenBrowserToolStripMenuItemClick);
+
             // NotificationWindow
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
@@ -92,17 +91,16 @@ namespace BourseInfo
             this.Name = "NotificationWindow";
             this.ShowInTaskbar = false;
             this.Text = "NotificationWindow";
-            this.VisibleChanged += new System.EventHandler(this.NotificationWindow_VisibleChanged);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.NotificationWindow_Paint);
+            this.VisibleChanged += new System.EventHandler(this.NotificationWindowVisibleChanged);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.NotificationWindowPaint);
             this.contextMenuStripNotif.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private TableLayoutPanel tableLayoutPanel;
         private ContextMenuStrip contextMenuStripNotif;
         private ToolStripMenuItem removeToolStripMenuItem;
         private ToolStripMenuItem openBrowserToolStripMenuItem;

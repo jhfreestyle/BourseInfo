@@ -83,7 +83,7 @@
             this.buttonLoad.TabIndex = 2;
             this.buttonLoad.Text = "Load Data";
             this.buttonLoad.UseVisualStyleBackColor = true;
-            this.buttonLoad.Click += new System.EventHandler(this.buttonRefresh_Click);
+            this.buttonLoad.Click += new System.EventHandler(this.ButtonRefreshClick);
             // 
             // dataGridView
             // 
@@ -106,9 +106,9 @@
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.Size = new System.Drawing.Size(443, 359);
             this.dataGridView.TabIndex = 4;
-            this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellDoubleClick);
-            this.dataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView_CellFormatting);
-            this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDown);
+            this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewCellDoubleClick);
+            this.dataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridViewCellFormatting);
+            this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridViewCellMouseDown);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -212,8 +212,8 @@
             this.myNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("myNotifyIcon.Icon")));
             this.myNotifyIcon.Text = "InfoBourse";
             this.myNotifyIcon.Visible = true;
-            this.myNotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.myNotifyIcon_MouseDoubleClick);
-            this.myNotifyIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.myNotifyIcon_MouseDown);
+            this.myNotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MyNotifyIconMouseDoubleClick);
+            this.myNotifyIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MyNotifyIconMouseDown);
             // 
             // companyNb
             // 
@@ -233,7 +233,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.Click += new System.EventHandler(this.PictureBox1Click);
             // 
             // dataGridContextMenu
             // 
@@ -249,18 +249,18 @@
             this.toolStripMenuItemAddToNotif.Name = "toolStripMenuItemAddToNotif";
             this.toolStripMenuItemAddToNotif.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemAddToNotif.Text = "Add To Notification";
-            this.toolStripMenuItemAddToNotif.Click += new System.EventHandler(this.toolStripMenuItemAddToNotif_Click);
+            this.toolStripMenuItemAddToNotif.Click += new System.EventHandler(this.ToolStripMenuItemAddToNotifClick);
             // 
             // toolStripMenuItemRemoveFromNotif
             // 
             this.toolStripMenuItemRemoveFromNotif.Name = "toolStripMenuItemRemoveFromNotif";
             this.toolStripMenuItemRemoveFromNotif.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItemRemoveFromNotif.Text = "Remove From Notification";
-            this.toolStripMenuItemRemoveFromNotif.Click += new System.EventHandler(this.toolStripMenuItemRemoveFromNotif_Click);
+            this.toolStripMenuItemRemoveFromNotif.Click += new System.EventHandler(this.ToolStripMenuItemRemoveFromNotifClick);
             // 
             // mainTimer
             // 
-            this.mainTimer.Tick += new System.EventHandler(this.refreshSelectedStockList);
+            this.mainTimer.Tick += new System.EventHandler(this.RefreshSelectedStockList);
             // 
             // comboBoxTime
             // 
@@ -270,7 +270,7 @@
             this.comboBoxTime.Name = "comboBoxTime";
             this.comboBoxTime.Size = new System.Drawing.Size(87, 21);
             this.comboBoxTime.TabIndex = 7;
-            this.comboBoxTime.SelectedIndexChanged += new System.EventHandler(this.comboBoxTime_SelectedIndexChanged);
+            this.comboBoxTime.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTimeSelectedIndexChanged);
             // 
             // buttonUpdate
             // 
@@ -280,7 +280,7 @@
             this.buttonUpdate.TabIndex = 8;
             this.buttonUpdate.Text = "Update Data";
             this.buttonUpdate.UseVisualStyleBackColor = true;
-            this.buttonUpdate.Click += new System.EventHandler(this.refreshSelectedStockList);
+            this.buttonUpdate.Click += new System.EventHandler(this.RefreshSelectedStockList);
             // 
             // label_valo
             // 
@@ -300,9 +300,9 @@
             this.textBoxSearch.Size = new System.Drawing.Size(180, 20);
             this.textBoxSearch.TabIndex = 10;
             this.textBoxSearch.Text = "Type to search...";
-            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
-            this.textBoxSearch.Enter += new System.EventHandler(this.textBoxSearch_Enter);
-            this.textBoxSearch.Leave += new System.EventHandler(this.textBoxSearch_Leave);
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.TextBoxSearchTextChanged);
+            this.textBoxSearch.Enter += new System.EventHandler(this.TextBoxSearchEnter);
+            this.textBoxSearch.Leave += new System.EventHandler(this.TextBoxSearchLeave);
             // 
             // MainForm
             // 
@@ -321,7 +321,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "InfoBourse - By Jean";
-            this.Resize += new System.EventHandler(this.MainForm_Resize);
+            this.Resize += new System.EventHandler(this.MainFormResize);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).EndInit();

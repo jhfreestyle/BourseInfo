@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace BourseInfo
 {
-    using System.Diagnostics.CodeAnalysis;
-
     static class Log
     {
         private const string LogFilePath = @"log.txt";
