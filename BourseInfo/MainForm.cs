@@ -30,7 +30,6 @@ namespace BourseInfo
         private const int NumberOfRetries = 1;
         private const int DelayOnRetry = 10000; // in milliseconds
         private const int RequestTimeout = 20000;
-        private const string LogFilePath = @"log.txt";
 
         public readonly List<String> JsonUrls = new List<String>
         {
@@ -116,7 +115,7 @@ namespace BourseInfo
                 }
                 catch (WebException ex)
                 {
-                    LogException(ex);
+                    Log.Write(ex);
 
                     //if (i == NumberOfRetries)
                     //{
@@ -130,10 +129,10 @@ namespace BourseInfo
             return result;
         }
 
-        private void buttonRefresh_Click(object sender, EventArgs e)
+        private async void buttonRefresh_Click(object sender, EventArgs e)
         {
             _stockList = new List<Stock>();
-            loadAllData();
+            await this.LoadAllData();
             _notificationWindow.RefreshContent(_stockList);
             updateValo();
         }
@@ -149,7 +148,7 @@ namespace BourseInfo
                 }
                 catch (Exception ex)
                 {
-                    LogException(ex);
+                    Log.Write(ex);
                 }
             }
         }
@@ -166,12 +165,12 @@ namespace BourseInfo
             label_valo.Text = p.GetPortfolioValue().ToString("C");
         }
 
-        private void refreshOneStock(string id)
+        private async void refreshOneStock(string id)
         {
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            string res = getHttpResponse("https://api.lecho.be/services/stocks?quotes=urn:issue:" + id);
+            string res = await WebController.GetAsync("https://api.lecho.be/services/stocks?quotes=urn:issue:" + id);
 
             dynamic json = JObject.Parse(res);
             var updatedStock = json.results[0];
@@ -191,7 +190,7 @@ namespace BourseInfo
 
         }
 
-        private void refreshSelectedStockList()
+        private async void refreshSelectedStockList()
         {
             DateTime lastUpdateDate = DateTime.MinValue;
 
@@ -199,7 +198,7 @@ namespace BourseInfo
             stopWatch.Start();
 
             string url = "/services/stocks?quotes=urn:issue:" + String.Join(",urn:issue:", _notificationWindow.StockList);
-            string res = getHttpResponse("https://api.lecho.be" + url);
+            string res = await WebController.GetAsync("https://api.lecho.be" + url);
             dynamic json = JObject.Parse(res);
 
             foreach (var updatedStock in json.results)
@@ -220,9 +219,9 @@ namespace BourseInfo
             Debug.Print($"Update executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
         }
 
-        private String GetStockId(string id)
+        private string GetStockId(string id)
         {
-            return id.Replace("urn:issue:", "");
+            return id.Replace("urn:issue:", string.Empty);
         }
 
         public Stock GetStockById(string id)
@@ -231,7 +230,7 @@ namespace BourseInfo
         }
 
 
-        private void loadAllData()
+        private async Task LoadAllData()
         {
             try
             {
@@ -242,11 +241,11 @@ namespace BourseInfo
                 {
                     try
                     {
-                        loadJson(url);
+                        await LoadJson(url);
                     }
                     catch (Exception ex)
                     {
-                        LogException(ex, url);
+                        Log.Write(ex, url);
                     }
                 }
 
@@ -266,13 +265,14 @@ namespace BourseInfo
             }
             catch (Exception ex)
             {
-                LogException(ex);
+                Log.Write(ex);
             }
         }
 
-        private void loadJson(string url)
+        private async Task LoadJson(string url)
         {
-            string res = getHttpResponse(url);
+            string res = await WebController.GetAsync(url);
+
             if (!string.IsNullOrEmpty(res))
             {
                 dynamic json = JObject.Parse(res);
@@ -473,24 +473,8 @@ namespace BourseInfo
                 mainTimer.Enabled = false;
             else
             {
-                mainTimer.Interval = Int32.Parse(comboBoxTime.SelectedValue.ToString()) * 1000; // in milliseconds
+                mainTimer.Interval = int.Parse(comboBoxTime.SelectedValue.ToString()) * 1000; // in milliseconds
                 mainTimer.Enabled = true;
-            }
-        }
-
-        public void LogException(Exception ex, string url = null)
-        {
-            if (!string.IsNullOrEmpty(url))
-                Log(DateTime.Now + " Error loading " + url + ": " + ex.Message + Environment.NewLine);
-            else
-                Log(DateTime.Now + " Error: " + ex.Message + Environment.NewLine + "StackTrace: " + ex.StackTrace + Environment.NewLine + Environment.NewLine);
-        }
-
-        public void Log(string message)
-        {
-            using (StreamWriter writer = new StreamWriter(LogFilePath, true))
-            {
-                writer.WriteLine(message);
             }
         }
 
@@ -509,7 +493,7 @@ namespace BourseInfo
         {
             if (textBoxSearch.Text.Equals("Type to search..."))
             {
-                textBoxSearch.Text = "";
+                textBoxSearch.Text = string.Empty;
             }
         }
 
