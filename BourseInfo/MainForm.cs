@@ -239,16 +239,16 @@
             {
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
-
-                foreach (var url in this.JsonUrls)
+                for (int i = 0; i < this.JsonUrls.Count; i++)
                 {
                     try
                     {
-                        await this.LoadJson(url);
+                        await this.LoadJson(this.JsonUrls[i]);
+                        this.UpdateLoadingPercentage(i + 1);
                     }
                     catch (Exception ex)
                     {
-                        Log.Write(ex, url);
+                        Log.Write(ex, this.JsonUrls[i]);
                     }
                 }
 
@@ -315,7 +315,6 @@
                                               };
 
                             this.stockList.Add(stock);
-
                         }
                     }
                 }
@@ -521,9 +520,14 @@
 
         private void RefreshNbCompany()
         {
-            this.companyNb.Text = this.stockBindingSource.Count + this.stockBindingSource.Count > 1
-                                      ? " companies"
-                                      : " company";
+            this.companyNb.Text = this.stockBindingSource.Count
+                                  + (this.stockBindingSource.Count > 1 ? " companies" : " company");
+        }
+
+        private void UpdateLoadingPercentage(int n)
+        {
+            double p = (100.0 * n / this.JsonUrls.Count);
+            this.buttonLoad.Text = p == 100 ? "Load Data" : $"Loading...{p:#}%";
         }
     }
 }

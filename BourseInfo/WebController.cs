@@ -29,7 +29,6 @@ namespace BourseInfo
                 string responseBody = await HttpClient.GetStringAsync(uri);
 
                 return responseBody;
-
             }
             catch (Exception e)
             {
