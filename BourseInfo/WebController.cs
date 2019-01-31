@@ -4,6 +4,11 @@ using System.Threading.Tasks;
 
 namespace BourseInfo
 {
+    using System.Collections.Generic;
+
+    using Newtonsoft.Json.Linq;
+
+    using PortfolioManagement;
 
     public static class WebController
     {
@@ -35,6 +40,30 @@ namespace BourseInfo
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        public static async Task<List<Stock>> GetStocksAsync(string uri)
+        {
+            var stockList = new List<Stock>();
+
+            string res = await GetAsync(uri);
+
+            if (!string.IsNullOrEmpty(res))
+            {
+                dynamic json = JObject.Parse(res);
+
+                var items = json.embedded?.issues;
+
+                if (items != null)
+                {
+                    foreach (var item in items)
+                    {
+                        stockList.Add(new Stock(item));
+                    }
+                }
+            }
+
+            return stockList;
         }
     }
 }

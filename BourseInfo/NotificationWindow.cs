@@ -7,6 +7,8 @@ using PortfolioManagement;
 
 namespace BourseInfo
 {
+    using System.Linq;
+
     public partial class NotificationWindow : Form
     {
         private readonly MainForm mainForm;
@@ -32,14 +34,14 @@ namespace BourseInfo
 
         public List<string> StockList { get; }
 
-        public void RefreshContent(List<Stock> stockData)
+        public void RefreshContent(Dictionary<string, Stock> stockData)
         {
             this.tableLayoutPanel.Controls.Clear();
             foreach (var id in this.StockList)
             {
                 UserControlStock control = new UserControlStock(id);
 
-                var s = stockData.Find(e => e.Id == id);
+                var s = stockData.Values.FirstOrDefault(e => e.Id == id);
 
                 if (s != null)
                 {

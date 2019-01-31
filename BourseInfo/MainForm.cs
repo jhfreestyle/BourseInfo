@@ -21,7 +21,7 @@
     {
         private readonly DataTable dataTable;
         private readonly NotificationWindow notificationWindow;
-        private List<Stock> stockList;
+        private Dictionary<string, Stock> stockList;
         private const int NumberOfRetries = 1;
         private const int DelayOnRetry = 10000; // in milliseconds
         private const int RequestTimeout = 20000;
@@ -131,7 +131,7 @@
 
         private async void ButtonRefreshClick(object sender, EventArgs e)
         {
-            this.stockList = new List<Stock>();
+            this.stockList = new Dictionary<string, Stock>();
             await this.LoadAllData();
             this.notificationWindow.RefreshContent(this.stockList);
             this.UpdateValo();
@@ -157,8 +157,8 @@
         {
             Portfolio p = new Portfolio { Ledger = new List<Transaction>() };
 
-            Stock s1 = this.stockList.FirstOrDefault(s => s.Name == "Claranova");
-            Stock s2 = this.stockList.FirstOrDefault(s => s.Name == "Lagardère");
+            Stock s1 = this.stockList.Values.FirstOrDefault(s => s.Name == "Claranova");
+            Stock s2 = this.stockList.Values.FirstOrDefault(s => s.Name == "Lagardère");
             p.Ledger.Add(new Transaction(s1, 100, 2));
             p.Ledger.Add(new Transaction(s2, 200, 1));
 
@@ -175,7 +175,7 @@
             dynamic json = JObject.Parse(res);
             var updatedStock = json.results[0];
 
-            Stock currentStock = this.stockList.FirstOrDefault(s => s.Id == id);
+            Stock currentStock = this.stockList.Values.FirstOrDefault(s => s.Id == id);
 
             if (currentStock != null)
             {
@@ -203,7 +203,7 @@
 
             foreach (var updatedStock in json.results)
             {
-                Stock currentStock = this.stockList.FirstOrDefault(s => s.Id == this.GetStockId(updatedStock.issueUrn.ToString()));
+                Stock currentStock = this.stockList.Values.FirstOrDefault(s => s.Id == Stock.GetStockId(updatedStock.issueUrn.ToString()));
 
                 if (currentStock != null)
                 {
@@ -222,29 +222,25 @@
             Debug.Print($"Update executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
         }
 
-        private string GetStockId(string id)
-        {
-            return id.Replace("urn:issue:", string.Empty);
-        }
-
         public Stock GetStockById(string id)
         {
-            return this.stockList.FirstOrDefault(s => s.Id.Equals(id));
+            return this.stockList.Values.FirstOrDefault(s => s.Id.Equals(id));
         }
-
 
         private async Task LoadAllData()
         {
             try
             {
+                var n = this.JsonUrls.Count;
+
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
-                for (int i = 0; i < this.JsonUrls.Count; i++)
+                for (int i = 0; i < n; i++)
                 {
                     try
                     {
-                        await this.LoadJson(this.JsonUrls[i]);
-                        this.UpdateLoadingPercentage(i + 1);
+                        await this.LoadStocksAsync(this.JsonUrls[i]);
+                        this.UpdateLoadingPercentage(i + 1, n);
                     }
                     catch (Exception ex)
                     {
@@ -255,15 +251,15 @@
                 stopWatch.Stop();
                 Debug.Print($"Loading executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
 
-                this.stockList = this.stockList.OrderBy(o => o.Name).ToList();
-
                 this.dataTable.Clear();
-                foreach (var s in this.stockList)
+
+                foreach (var s in this.stockList.Values.OrderBy(o => o.Name))
                 {
-                    this.dataTable.Rows.Add(s.Id, s.Isin, s.Name, s.Ticker, s.Value, s.Pct );
+                    this.dataTable.Rows.Add(s.Id, s.Isin, s.Name, s.Ticker, s.Value, s.Pct);
                 }
 
                 this.RefreshNbCompany();
+                this.RefreshLastTime();
             }
             catch (Exception ex)
             {
@@ -271,53 +267,13 @@
             }
         }
 
-        private async Task LoadJson(string url)
+        private async Task LoadStocksAsync(string uri)
         {
-            string res = await WebController.GetAsync(url);
+            var stockList = await WebController.GetStocksAsync(uri);
 
-            if (!string.IsNullOrEmpty(res))
+            foreach (var s in stockList)
             {
-                dynamic json = JObject.Parse(res);
-
-                this.textBoxLastUpdate.Text = json.values?.lastTime + "\r\n";
-
-                var items = json.embedded?.issues;
-
-                if (items != null)
-                {
-                    foreach (var item in items)
-                    {
-                        string id = this.GetStockId(item.urn.ToString());
-
-                        bool found = false;
-                        foreach (var s in this.stockList)
-                        {
-                            if (s.Id == id)
-                            {
-                                found = true; // dont add twice the same
-                            }
-                        }
-
-                        if (!found)
-                        {
-                            // add item
-                            Stock stock = new Stock
-                                              {
-                                                  Id = id,
-                                                  Isin = item.isinCode,
-                                                  Name = item.fullName._default,
-                                                  Ticker = item.ticker,
-                                                  Value = item.values.lastPrice == null ? -1 : item.values.lastPrice,
-                                                  Pct = item.values.dayChangePercentage == null
-                                                            ? -1
-                                                            : item.values.dayChangePercentage,
-                                                  Info = item.ToString()
-                                              };
-
-                            this.stockList.Add(stock);
-                        }
-                    }
-                }
+                this.stockList[s.Id] = s;
             }
         }
 
@@ -419,7 +375,7 @@
         {
             string clickedStockIsin = this.dataGridView.CurrentCell.Value.ToString();
 
-            foreach (Stock s in this.stockList)
+            foreach (Stock s in this.stockList.Values)
             {
                 if (s.Isin == clickedStockIsin)
                 {
@@ -524,9 +480,14 @@
                                   + (this.stockBindingSource.Count > 1 ? " companies" : " company");
         }
 
-        private void UpdateLoadingPercentage(int n)
+        private void RefreshLastTime()
         {
-            double p = (100.0 * n / this.JsonUrls.Count);
+            this.textBoxLastUpdate.Text = this.stockList.Values.Max(s => s.LastTime).ToString();
+        }
+
+        private void UpdateLoadingPercentage(int i, int n)
+        {
+            double p = (100.0 * i / n);
             this.buttonLoad.Text = p == 100 ? "Load Data" : $"Loading...{p:#}%";
         }
     }
