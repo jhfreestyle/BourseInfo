@@ -18,11 +18,11 @@ namespace BourseInfoTests
             for (int i = 0 ; i < mf.JsonUrls.Count ; i++)
             {
                 stopWatch.Restart();
-                var res = mf.GetHttpResponse(mf.JsonUrls[i]);
+                var res = WebController.GetString(mf.JsonUrls[i]);
                 stopWatch.Stop();
                 Assert.IsNotNull(res);
 
-                Trace.WriteLine("Url " + i + ": " + stopWatch.ElapsedMilliseconds/1000.0 + "s (" + mf.JsonUrls[i] + ")");
+                Trace.WriteLine("Url " + i + ": " + (stopWatch.ElapsedMilliseconds / 1000.0) + "s (" + mf.JsonUrls[i] + ")");
             }
             
         }

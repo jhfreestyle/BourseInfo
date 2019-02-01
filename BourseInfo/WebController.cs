@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 namespace BourseInfo
 {
     using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Threading;
 
     using Newtonsoft.Json.Linq;
 
@@ -14,6 +17,12 @@ namespace BourseInfo
     {
         private static readonly HttpClient HttpClient;
 
+        private const int NumberOfRetries = 1;
+
+        private const int DelayAfterRetry = 10000; // in milliseconds
+
+        private const int RequestTimeout = 20000;
+
         static WebController()
         {
             HttpClient = new HttpClient();
@@ -21,7 +30,7 @@ namespace BourseInfo
             // HttpClient.Timeout = TimeSpan.FromSeconds(10); // 10 sec
         }
 
-        public static async Task<string> GetAsync(string uri)
+        public static async Task<string> GetStringAsync(string uri)
         {
             try
             {
@@ -46,9 +55,9 @@ namespace BourseInfo
         {
             var stockList = new List<Stock>();
 
-            string res = await GetAsync(uri);
+            string res = await GetStringAsync(uri);
 
-            if (!string.IsNullOrEmpty(res))
+            if (!String.IsNullOrEmpty(res))
             {
                 dynamic json = JObject.Parse(res);
 
@@ -64,6 +73,43 @@ namespace BourseInfo
             }
 
             return stockList;
+        }
+
+        public static string GetString(string uri)
+        {
+            string result = string.Empty;
+
+            for (int i = 1; i <= NumberOfRetries; ++i)
+            {
+                WebRequest request = WebRequest.Create(uri);
+                request.Timeout = RequestTimeout;
+
+                try
+                {
+                    WebResponse response = request.GetResponse();
+                    Stream data = response.GetResponseStream();
+
+                    using (StreamReader sr = new StreamReader(data))
+                    {
+                        result = sr.ReadToEnd();
+                    }
+
+                    break; // success, do not retry!
+                }
+                catch (WebException ex)
+                {
+                    Log.Write(ex);
+
+                    // if (i == NumberOfRetries)
+                    // {
+                    // throw;
+                    // }
+                    if (NumberOfRetries > 1)
+                        Thread.Sleep(DelayAfterRetry);
+                }
+            }
+
+            return result;
         }
     }
 }

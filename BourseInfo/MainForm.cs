@@ -19,12 +19,11 @@
 
     public partial class MainForm : Form
     {
+        private const string DataFilePath = "data.xml";
+
         private readonly DataTable dataTable;
         private readonly NotificationWindow notificationWindow;
         private Dictionary<string, Stock> stockList;
-        private const int NumberOfRetries = 1;
-        private const int DelayOnRetry = 10000; // in milliseconds
-        private const int RequestTimeout = 20000;
 
         public readonly List<string> JsonUrls = 
             new List<string>
@@ -94,40 +93,6 @@
 
         }
 
-        public string GetHttpResponse(string url)
-        {
-            string result = null;
-            for (int i = 1; i <= NumberOfRetries; ++i)
-            {
-                WebRequest request = WebRequest.Create(url);
-                request.Timeout = RequestTimeout;
-                result = string.Empty;
-                try
-                {
-                    WebResponse response = request.GetResponse();
-                    Stream data = response.GetResponseStream();
-                    using (StreamReader sr = new StreamReader(data))
-                    {
-                        result = sr.ReadToEnd();
-                    }
-
-                    break; // success, do not retry!
-                }
-                catch (WebException ex)
-                {
-                    Log.Write(ex);
-
-                    // if (i == NumberOfRetries)
-                    // {
-                    // throw;
-                    // }
-                    if (NumberOfRetries > 1)
-                        Thread.Sleep(DelayOnRetry);
-                }
-            }
-
-            return result;
-        }
 
         private async void ButtonRefreshClick(object sender, EventArgs e)
         {
@@ -165,31 +130,6 @@
             this.label_valo.Text = p.GetPortfolioValue().ToString("C");
         }
 
-        private async void RefreshOneStock(string id)
-        {
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-
-            string res = await WebController.GetAsync("https://api.lecho.be/services/stocks?quotes=urn:issue:" + id);
-
-            dynamic json = JObject.Parse(res);
-            var updatedStock = json.results[0];
-
-            Stock currentStock = this.stockList.Values.FirstOrDefault(s => s.Id == id);
-
-            if (currentStock != null)
-            {
-                currentStock.Value = updatedStock.lastPrice;
-                currentStock.Pct = updatedStock.dayChangePercentage;
-            }
-
-            this.textBoxLastUpdate.Text = updatedStock.updatedOn + "\r\n";
-
-            stopWatch.Stop();
-            Debug.Print($"Update executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
-
-        }
-
         private async void RefreshSelectedStockList()
         {
             DateTime lastUpdateDate = DateTime.MinValue;
@@ -198,7 +138,7 @@
             stopWatch.Start();
 
             string url = "/services/stocks?quotes=urn:issue:" + string.Join(",urn:issue:", this.notificationWindow.StockList);
-            string res = await WebController.GetAsync("https://api.lecho.be" + url);
+            string res = await WebController.GetStringAsync("https://api.lecho.be" + url);
             dynamic json = JObject.Parse(res);
 
             foreach (var updatedStock in json.results)
@@ -239,7 +179,13 @@
                 {
                     try
                     {
-                        await this.LoadStocksAsync(this.JsonUrls[i]);
+                        var stockList = await WebController.GetStocksAsync(this.JsonUrls[i]);
+
+                        foreach (var s in stockList)
+                        {
+                            this.stockList[s.Id] = s;
+                        }
+
                         this.UpdateLoadingPercentage(i + 1, n);
                     }
                     catch (Exception ex)
@@ -267,16 +213,6 @@
             }
         }
 
-        private async Task LoadStocksAsync(string uri)
-        {
-            var stockList = await WebController.GetStocksAsync(uri);
-
-            foreach (var s in stockList)
-            {
-                this.stockList[s.Id] = s;
-            }
-        }
-
         private void DataGridViewCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (this.dataGridView.Columns["pctDataGridViewTextBoxColumn"] != null)
@@ -294,18 +230,14 @@
 
         private void SaveFile()
         {
-            string filePath = "data.xml";
-            this.dataSet.WriteXml(filePath);
+            this.dataSet.WriteXml(DataFilePath);
         }
 
         private void LoadFile()
         {
-            this.dataSet.Tables.ToString();
-
-            string filePath = "data.xml";
-            if (File.Exists(filePath))
+            if (File.Exists(DataFilePath))
             {
-                this.dataSet.ReadXml(filePath);
+                this.dataSet.ReadXml(DataFilePath);
             }
         }
 

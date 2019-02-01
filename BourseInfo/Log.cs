@@ -3,7 +3,7 @@ using System.IO;
 
 namespace BourseInfo
 {
-    static class Log
+    internal static class Log
     {
         private const string LogFilePath = @"log.txt";
 
