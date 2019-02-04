@@ -109,6 +109,7 @@
                 try
                 {
                     this.RefreshSelectedStockList();
+                    this.RefreshLastTime();
                     this.notificationWindow.RefreshContent(this.stockList);
                 }
                 catch (Exception ex)
@@ -132,8 +133,6 @@
 
         private async void RefreshSelectedStockList()
         {
-            DateTime lastUpdateDate = DateTime.MinValue;
-
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
@@ -149,15 +148,10 @@
                 {
                     currentStock.Value = updatedStock.lastPrice;
                     currentStock.Pct = updatedStock.dayChangePercentage;
-                }
-
-                if (updatedStock.updatedOn > lastUpdateDate)
-                {
-                    lastUpdateDate = updatedStock.updatedOn;
+                    currentStock.LastUpdate = updatedStock.updatedOn;
                 }
             }
 
-            this.textBoxLastUpdate.Text = lastUpdateDate + "\r\n";
             stopWatch.Stop();
             Debug.Print($"Update executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
         }
@@ -414,7 +408,7 @@
 
         private void RefreshLastTime()
         {
-            this.textBoxLastUpdate.Text = this.stockList.Values.Max(s => s.LastTime).ToString();
+            this.textBoxLastUpdate.Text = this.stockList.Values.Max(s => s.LastUpdate) + "\r\n";
         }
 
         private void UpdateLoadingPercentage(int i, int n)

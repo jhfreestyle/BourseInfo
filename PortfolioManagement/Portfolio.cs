@@ -60,7 +60,7 @@ namespace PortfolioManagement
             this.Ticker = item.ticker;
             this.Value = item.values.lastPrice == null ? -1 : item.values.lastPrice;
             this.Pct = item.values.dayChangePercentage == null ? -1 : item.values.dayChangePercentage;
-            this.LastTime = item.values.lastTime; // item.values.updatedOn;
+            this.LastUpdate = item.values.updatedOn == null ? DateTime.MinValue : item.values.updatedOn; // item.values.lastTime;
             this.Info = item.ToString();
         }
 
@@ -76,7 +76,7 @@ namespace PortfolioManagement
 
         public decimal Pct { get; set; }
 
-        public DateTime? LastTime { get; set; }
+        public DateTime LastUpdate { get; set; }
 
         public string Info { get; set; }
 
