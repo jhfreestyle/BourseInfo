@@ -17,7 +17,7 @@ namespace BourseInfo
     {
         private static readonly HttpClient HttpClient;
 
-        private const int NumberOfRetries = 1;
+        private const int NumberOfRetries = 3;
 
         private const int DelayAfterRetry = 10000; // in milliseconds
 
@@ -32,23 +32,35 @@ namespace BourseInfo
 
         public static async Task<string> GetStringAsync(string uri)
         {
-            try
-            {
-                // Create a New HttpClient object and dispose it when done, so the app doesn't leak resources
-                // HttpResponseMessage response = await HttpClient.GetAsync(uri);
-                // response.EnsureSuccessStatusCode();
-                // string responseBody = await response.Content.ReadAsStringAsync();
+            // Create a New HttpClient object and dispose it when done, so the app doesn't leak resources
+            // HttpResponseMessage response = await HttpClient.GetAsync(uri);
+            // response.EnsureSuccessStatusCode();
+            // string responseBody = await response.Content.ReadAsStringAsync();
 
-                // Above three lines can be replaced with new helper method below
-                string responseBody = await HttpClient.GetStringAsync(uri);
-
-                return responseBody;
-            }
-            catch (Exception e)
+            // Above three lines can be replaced with new helper method below
+            for (int i = 1; i <= NumberOfRetries; ++i)
             {
-                Console.WriteLine(e);
-                throw;
+                try
+                {
+                    string responseBody = await HttpClient.GetStringAsync(uri);
+
+                    return responseBody; // success, do not retry!
+                }
+
+                catch (WebException ex)
+                {
+                    Log.Write(ex, uri);
+
+                    if (i == NumberOfRetries)
+                    {
+                        throw;
+                    }
+                    if (NumberOfRetries > 1)
+                        Thread.Sleep(DelayAfterRetry);
+                }
             }
+
+            return string.Empty;
         }
 
         public static async Task<List<Stock>> GetStocksAsync(string uri)
@@ -73,43 +85,6 @@ namespace BourseInfo
             }
 
             return stockList;
-        }
-
-        public static string GetString(string uri)
-        {
-            string result = string.Empty;
-
-            for (int i = 1; i <= NumberOfRetries; ++i)
-            {
-                WebRequest request = WebRequest.Create(uri);
-                request.Timeout = RequestTimeout;
-
-                try
-                {
-                    WebResponse response = request.GetResponse();
-                    Stream data = response.GetResponseStream();
-
-                    using (StreamReader sr = new StreamReader(data))
-                    {
-                        result = sr.ReadToEnd();
-                    }
-
-                    break; // success, do not retry!
-                }
-                catch (WebException ex)
-                {
-                    Log.Write(ex);
-
-                    // if (i == NumberOfRetries)
-                    // {
-                    // throw;
-                    // }
-                    if (NumberOfRetries > 1)
-                        Thread.Sleep(DelayAfterRetry);
-                }
-            }
-
-            return result;
         }
     }
 }

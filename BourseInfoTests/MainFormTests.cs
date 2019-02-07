@@ -18,7 +18,7 @@ namespace BourseInfoTests
             for (int i = 0 ; i < mf.JsonUrls.Count ; i++)
             {
                 stopWatch.Restart();
-                var res = WebController.GetString(mf.JsonUrls[i]);
+                var res = WebController.GetStringAsync(mf.JsonUrls[i]);
                 stopWatch.Stop();
                 Assert.IsNotNull(res);
 

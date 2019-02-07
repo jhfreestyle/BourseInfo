@@ -61,11 +61,7 @@
             this.myNotifyIcon.Visible = false;
             this.pictureBox1.Visible = false;
 
-            List<string> idList = new List<string>();
-            foreach (DataRow r in this.StocksInNotifTable.Rows)
-            {
-                idList.Add(r["Id"].ToString());
-            }
+            List<string> idList = this.StocksInNotifTable.Rows.Cast<DataRow>().Select(x => x["Id"].ToString()).ToList();
 
             this.notificationWindow = new NotificationWindow(idList, this);
 
@@ -90,14 +86,25 @@
                 new { Text = "10m", Value = "600" },
             };
             this.comboBoxTime.SelectedIndex = 0;
-
         }
 
 
         private async void ButtonRefreshClick(object sender, EventArgs e)
         {
             this.stockList = new Dictionary<string, Stock>();
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             await this.LoadAllData();
+
+            stopWatch.Stop();
+            Debug.Print($"Loading executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
+
+            this.LoadDataTable();
+
+            this.RefreshNbCompany();
+            this.RefreshLastTime();
             this.notificationWindow.RefreshContent(this.stockList);
             this.UpdateValo();
         }
@@ -161,49 +168,35 @@
             return this.stockList.Values.FirstOrDefault(s => s.Id.Equals(id));
         }
 
+        private async Task LoadOneUri(string uri, int i, int n)
+        {
+            var stockList = await WebController.GetStocksAsync(uri);
+
+            foreach (var s in stockList)
+            {
+                this.stockList[s.Id] = s;
+            }
+
+            this.UpdateLoadingPercentage(i + 1, n);
+        }
+
         private async Task LoadAllData()
         {
-            try
+            var n = this.JsonUrls.Count;
+
+            for (int i = 0; i < n; i++)
             {
-                var n = this.JsonUrls.Count;
-
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
-                for (int i = 0; i < n; i++)
-                {
-                    try
-                    {
-                        var stockList = await WebController.GetStocksAsync(this.JsonUrls[i]);
-
-                        foreach (var s in stockList)
-                        {
-                            this.stockList[s.Id] = s;
-                        }
-
-                        this.UpdateLoadingPercentage(i + 1, n);
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Write(ex, this.JsonUrls[i]);
-                    }
-                }
-
-                stopWatch.Stop();
-                Debug.Print($"Loading executed in {stopWatch.Elapsed.TotalMilliseconds:0} milliseconds.");
-
-                this.dataTable.Clear();
-
-                foreach (var s in this.stockList.Values.OrderBy(o => o.Name))
-                {
-                    this.dataTable.Rows.Add(s.Id, s.Isin, s.Name, s.Ticker, s.Value, s.Pct);
-                }
-
-                this.RefreshNbCompany();
-                this.RefreshLastTime();
+                await this.LoadOneUri(this.JsonUrls[i], i, n);
             }
-            catch (Exception ex)
+        }
+
+        private void LoadDataTable()
+        {
+            this.dataTable.Clear();
+
+            foreach (var s in this.stockList.Values.OrderBy(o => o.Name))
             {
-                Log.Write(ex);
+                this.dataTable.Rows.Add(s.Id, s.Isin, s.Name, s.Ticker, s.Value, s.Pct);
             }
         }
 
