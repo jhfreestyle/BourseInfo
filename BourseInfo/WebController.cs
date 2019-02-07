@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 namespace BourseInfo
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Net;
     using System.Threading;
@@ -43,6 +44,7 @@ namespace BourseInfo
                 try
                 {
                     string responseBody = await HttpClient.GetStringAsync(uri);
+                    Debug.WriteLine($"End: {uri}");
 
                     return responseBody; // success, do not retry!
                 }
@@ -69,7 +71,7 @@ namespace BourseInfo
 
             string res = await GetStringAsync(uri);
 
-            if (!String.IsNullOrEmpty(res))
+            if (!string.IsNullOrEmpty(res))
             {
                 dynamic json = JObject.Parse(res);
 

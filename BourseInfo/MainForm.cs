@@ -8,7 +8,6 @@
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
@@ -168,26 +167,31 @@
             return this.stockList.Values.FirstOrDefault(s => s.Id.Equals(id));
         }
 
-        private async Task LoadOneUri(string uri, int i, int n)
-        {
-            var stockList = await WebController.GetStocksAsync(uri);
-
-            foreach (var s in stockList)
-            {
-                this.stockList[s.Id] = s;
-            }
-
-            this.UpdateLoadingPercentage(i + 1, n);
-        }
-
         private async Task LoadAllData()
         {
             var n = this.JsonUrls.Count;
+            var tasks = new Task<List<Stock>>[n];
+            var results = new List<Stock>[n];
 
+            // Create and start the tasks
             for (int i = 0; i < n; i++)
             {
-                await this.LoadOneUri(this.JsonUrls[i], i, n);
+                tasks[i] = WebController.GetStocksAsync(this.JsonUrls[i]);
             }
+
+            // Wait for each task to finish and populate stockList
+            for (int i = 0; i < n; i++)
+            {
+                results[i] = await tasks[i];
+                foreach (var s in results[i])
+                {
+                    this.stockList[s.Id] = s;
+                }
+
+                this.UpdateLoadingPercentage(i + 1, n);
+            }
+
+            // this.stockList = results.SelectMany(x => x).ToDictionary(s => s.Id, s => s);
         }
 
         private void LoadDataTable()
