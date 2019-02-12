@@ -108,13 +108,13 @@
             this.UpdateValo();
         }
 
-        private void RefreshSelectedStockList(object sender, EventArgs e)
+        private async void RefreshSelectedStockList(object sender, EventArgs e)
         {
             if (this.stockList != null)
             {
                 try
                 {
-                    this.RefreshSelectedStockList();
+                    await this.RefreshSelectedStockList();
                     this.RefreshLastTime();
                     this.notificationWindow.RefreshContent(this.stockList);
                 }
@@ -137,7 +137,7 @@
             this.label_valo.Text = p.GetPortfolioValue().ToString("C");
         }
 
-        private async void RefreshSelectedStockList()
+        private async Task RefreshSelectedStockList()
         {
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -148,7 +148,7 @@
 
             foreach (var updatedStock in json.results)
             {
-                Stock currentStock = this.stockList.Values.FirstOrDefault(s => s.Id == Stock.GetStockId(updatedStock.issueUrn.ToString()));
+                Stock currentStock = this.GetStockById(Stock.GetStockId(updatedStock.issueUrn.ToString()));
 
                 if (currentStock != null)
                 {
