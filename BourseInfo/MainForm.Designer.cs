@@ -52,11 +52,14 @@
             this.dataGridContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemAddToNotif = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRemoveFromNotif = new System.Windows.Forms.ToolStripMenuItem();
+            this.buyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTimer = new System.Windows.Forms.Timer(this.components);
             this.comboBoxTime = new System.Windows.Forms.ComboBox();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.label_valo = new System.Windows.Forms.Label();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
+            this.label_gain = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
@@ -68,18 +71,18 @@
             // 
             // textBoxLastUpdate
             // 
-            this.textBoxLastUpdate.Location = new System.Drawing.Point(292, 13);
+            this.textBoxLastUpdate.Location = new System.Drawing.Point(258, 13);
             this.textBoxLastUpdate.Name = "textBoxLastUpdate";
             this.textBoxLastUpdate.ReadOnly = true;
             this.textBoxLastUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLastUpdate.Size = new System.Drawing.Size(164, 20);
+            this.textBoxLastUpdate.Size = new System.Drawing.Size(198, 20);
             this.textBoxLastUpdate.TabIndex = 1;
             // 
             // buttonLoad
             // 
             this.buttonLoad.Location = new System.Drawing.Point(11, 11);
             this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(88, 23);
+            this.buttonLoad.Size = new System.Drawing.Size(66, 23);
             this.buttonLoad.TabIndex = 2;
             this.buttonLoad.Text = "Load Data";
             this.buttonLoad.UseVisualStyleBackColor = true;
@@ -217,10 +220,10 @@
             // 
             // companyNb
             // 
-            this.companyNb.Location = new System.Drawing.Point(292, 43);
+            this.companyNb.Location = new System.Drawing.Point(374, 43);
             this.companyNb.Margin = new System.Windows.Forms.Padding(0);
             this.companyNb.Name = "companyNb";
-            this.companyNb.Size = new System.Drawing.Size(163, 18);
+            this.companyNb.Size = new System.Drawing.Size(81, 18);
             this.companyNb.TabIndex = 5;
             this.companyNb.Text = "0 company";
             this.companyNb.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -239,10 +242,12 @@
             // 
             this.dataGridContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemAddToNotif,
-            this.toolStripMenuItemRemoveFromNotif});
+            this.toolStripMenuItemRemoveFromNotif,
+            this.buyToolStripMenuItem,
+            this.sellToolStripMenuItem});
             this.dataGridContextMenu.Name = "dataGridContextMenu";
             this.dataGridContextMenu.ShowImageMargin = false;
-            this.dataGridContextMenu.Size = new System.Drawing.Size(190, 48);
+            this.dataGridContextMenu.Size = new System.Drawing.Size(190, 92);
             // 
             // toolStripMenuItemAddToNotif
             // 
@@ -258,6 +263,20 @@
             this.toolStripMenuItemRemoveFromNotif.Text = "Remove From Notification";
             this.toolStripMenuItemRemoveFromNotif.Click += new System.EventHandler(this.ToolStripMenuItemRemoveFromNotifClick);
             // 
+            // buyToolStripMenuItem
+            // 
+            this.buyToolStripMenuItem.Name = "buyToolStripMenuItem";
+            this.buyToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.buyToolStripMenuItem.Text = "Buy";
+            this.buyToolStripMenuItem.Click += new System.EventHandler(this.buyToolStripMenuItem_Click);
+            // 
+            // sellToolStripMenuItem
+            // 
+            this.sellToolStripMenuItem.Name = "sellToolStripMenuItem";
+            this.sellToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.sellToolStripMenuItem.Text = "Sell";
+            this.sellToolStripMenuItem.Click += new System.EventHandler(this.sellToolStripMenuItem_Click);
+            // 
             // mainTimer
             // 
             this.mainTimer.Tick += new System.EventHandler(this.RefreshSelectedStockList);
@@ -266,7 +285,7 @@
             // 
             this.comboBoxTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTime.FormattingEnabled = true;
-            this.comboBoxTime.Location = new System.Drawing.Point(199, 13);
+            this.comboBoxTime.Location = new System.Drawing.Point(165, 11);
             this.comboBoxTime.Name = "comboBoxTime";
             this.comboBoxTime.Size = new System.Drawing.Size(87, 21);
             this.comboBoxTime.TabIndex = 7;
@@ -274,9 +293,9 @@
             // 
             // buttonUpdate
             // 
-            this.buttonUpdate.Location = new System.Drawing.Point(105, 11);
+            this.buttonUpdate.Location = new System.Drawing.Point(83, 11);
             this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(88, 23);
+            this.buttonUpdate.Size = new System.Drawing.Size(76, 23);
             this.buttonUpdate.TabIndex = 8;
             this.buttonUpdate.Text = "Update Data";
             this.buttonUpdate.UseVisualStyleBackColor = true;
@@ -284,10 +303,10 @@
             // 
             // label_valo
             // 
-            this.label_valo.Location = new System.Drawing.Point(199, 43);
+            this.label_valo.Location = new System.Drawing.Point(162, 43);
             this.label_valo.Margin = new System.Windows.Forms.Padding(0);
             this.label_valo.Name = "label_valo";
-            this.label_valo.Size = new System.Drawing.Size(87, 18);
+            this.label_valo.Size = new System.Drawing.Size(90, 18);
             this.label_valo.TabIndex = 9;
             this.label_valo.Text = "0.00 €";
             this.label_valo.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -297,18 +316,28 @@
             this.textBoxSearch.ForeColor = System.Drawing.Color.Gray;
             this.textBoxSearch.Location = new System.Drawing.Point(13, 40);
             this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(180, 20);
+            this.textBoxSearch.Size = new System.Drawing.Size(146, 20);
             this.textBoxSearch.TabIndex = 10;
             this.textBoxSearch.Text = "Type to search...";
             this.textBoxSearch.TextChanged += new System.EventHandler(this.TextBoxSearchTextChanged);
             this.textBoxSearch.Enter += new System.EventHandler(this.TextBoxSearchEnter);
             this.textBoxSearch.Leave += new System.EventHandler(this.TextBoxSearchLeave);
             // 
+            // label_gain
+            // 
+            this.label_gain.Location = new System.Drawing.Point(258, 43);
+            this.label_gain.Margin = new System.Windows.Forms.Padding(0);
+            this.label_gain.Name = "label_gain";
+            this.label_gain.Size = new System.Drawing.Size(116, 18);
+            this.label_gain.TabIndex = 11;
+            this.label_gain.Text = "0.00 €";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 438);
+            this.Controls.Add(this.label_gain);
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.label_valo);
             this.Controls.Add(this.buttonUpdate);
@@ -363,6 +392,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn pctDataGridViewTextBoxColumn;
         private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.ToolStripMenuItem buyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sellToolStripMenuItem;
+        private System.Windows.Forms.Label label_gain;
     }
 }
 

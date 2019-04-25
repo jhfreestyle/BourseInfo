@@ -12,9 +12,12 @@
     using System.Threading.Tasks;
     using System.Windows.Forms;
 
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     using PortfolioManagement;
+
+    using Utils;
 
     public partial class MainForm : Form
     {
@@ -23,6 +26,8 @@
         private readonly DataTable dataTable;
         private readonly NotificationWindow notificationWindow;
         private Dictionary<string, Stock> stockList;
+
+        public Portfolio MyPortfolio;
 
         public readonly List<string> JsonUrls = 
             new List<string>
@@ -103,9 +108,10 @@
             this.LoadDataTable();
 
             this.RefreshNbCompany();
-            this.RefreshLastTime();
-            this.notificationWindow.RefreshContent(this.stockList);
-            this.UpdateValo();
+
+            this.LoadPortfolio();
+
+            this.RefreshUI();
         }
 
         private async void RefreshSelectedStockList(object sender, EventArgs e)
@@ -115,8 +121,7 @@
                 try
                 {
                     await this.RefreshSelectedStockList();
-                    this.RefreshLastTime();
-                    this.notificationWindow.RefreshContent(this.stockList);
+                    this.RefreshUI();
                 }
                 catch (Exception ex)
                 {
@@ -125,16 +130,21 @@
             }
         }
 
-        private void UpdateValo()
+        private void RefreshUI()
         {
-            Portfolio p = new Portfolio { Ledger = new List<Transaction>() };
+            this.RefreshLastTime();
+            this.notificationWindow.RefreshContent(this.stockList);
+            this.RefreshValo();
+        }
 
-            Stock s1 = this.stockList.Values.FirstOrDefault(s => s.Name == "Claranova");
-            Stock s2 = this.stockList.Values.FirstOrDefault(s => s.Name == "Lagardère");
-            p.Ledger.Add(new Transaction(s1, 100, 2));
-            p.Ledger.Add(new Transaction(s2, 200, 1));
+        private void RefreshValo()
+        {
+            var gainLoss = this.MyPortfolio.GetPortfolioGainLoss();
+            var gainLossPct = this.MyPortfolio.GetPortfolioGainLossPct();
+            var sign = gainLoss < 0 ? "-" : "+";
 
-            this.label_valo.Text = p.GetPortfolioValue().ToString("C");
+            this.label_valo.Text = this.MyPortfolio.GetPortfolioValue().ToString("C");
+            this.label_gain.Text = "(" + sign + gainLoss.ToString("C") + " " + sign + gainLossPct.ToString("P1") + ")";
         }
 
         private async Task RefreshSelectedStockList()
@@ -190,8 +200,6 @@
 
                 this.UpdateLoadingPercentage(i + 1, n);
             }
-
-            // this.stockList = results.SelectMany(x => x).ToDictionary(s => s.Id, s => s);
         }
 
         private void LoadDataTable()
@@ -224,11 +232,35 @@
             this.dataSet.WriteXml(DataFilePath);
         }
 
+        private void SavePortfolio()
+        {
+            var json = JsonConvert.SerializeObject(this.MyPortfolio, Formatting.Indented);
+            File.WriteAllText("portfolio.json", json);
+        }
+
         private void LoadFile()
         {
             if (File.Exists(DataFilePath))
             {
                 this.dataSet.ReadXml(DataFilePath);
+            }
+        }
+
+        private void LoadPortfolio()
+        {
+            if (File.Exists("portfolio.json"))
+            {
+                var json = File.ReadAllText("portfolio.json");
+                this.MyPortfolio = JsonConvert.DeserializeObject<Portfolio>(json);
+
+                foreach (var t in this.MyPortfolio.Ledger)
+                {
+                    t.Stock = this.stockList.Values.FirstOrDefault(s => s.Isin.EqualsIgnoreCase(t.Isin));
+                }
+            }
+            else
+            {
+                this.MyPortfolio = new Portfolio();
             }
         }
 
@@ -412,6 +444,37 @@
         {
             double p = (100.0 * i / n);
             this.buttonLoad.Text = p == 100 ? "Load Data" : $"Loading...{p:#}%";
+        }
+
+        private void buyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.BuySellAction(true);
+        }
+
+        private void sellToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.BuySellAction(false);
+        }
+
+        private void BuySellAction(bool buy)
+        {
+            var isin = this.dataGridView.CurrentCell.Value.ToString();
+            var stock = this.stockList.Values.FirstOrDefault(s => s.Isin.EqualsIgnoreCase(isin));
+
+            if (stock != null)
+            {
+                // if buy == false => sell
+                using (BuySellPopup bs = new BuySellPopup(this, buy, stock))
+                {
+                    if (bs.ShowDialog(this) == DialogResult.OK)
+                    {
+                        // Add transaction in datatable
+
+                        this.RefreshValo();
+                        this.SavePortfolio();
+                    }
+                }
+            }
         }
     }
 }
