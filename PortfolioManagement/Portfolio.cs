@@ -35,7 +35,15 @@ namespace PortfolioManagement
 
         public decimal GetPortfolioGainLossPct()
         {
-            return this.GetPortfolioValue() / this.GetPortfolioInvestedValue() - 1;
+            var previousValue = this.GetPortfolioInvestedValue();
+            var currentValue = this.GetPortfolioValue();
+
+            if (previousValue > 0 && currentValue >= 0)
+            {
+                return (currentValue / previousValue) - 1;
+            }
+
+            return -2;
         }
 
         public void AddTransaction(Stock stock, int quantity, decimal price)
@@ -88,7 +96,7 @@ namespace PortfolioManagement
         /// </param>
         public Stock(dynamic item)
         {
-            if (item != null)
+            if (item?.values != null)
             {
                 this.Id = GetStockId(item.urn.ToString());
                 this.Isin = item.isinCode;

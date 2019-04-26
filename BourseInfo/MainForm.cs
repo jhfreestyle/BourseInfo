@@ -139,12 +139,16 @@
 
         private void RefreshValo()
         {
-            var gainLoss = this.MyPortfolio.GetPortfolioGainLoss();
-            var gainLossPct = this.MyPortfolio.GetPortfolioGainLossPct();
-            var sign = gainLoss < 0 ? "-" : "+";
+            var gL = this.MyPortfolio.GetPortfolioGainLoss();
+
+            var gainLoss = gL.ToString("+0.00 €;-0.00 €");
+            var gainLossPct = this.MyPortfolio.GetPortfolioGainLossPct().ToString("+0.0%;-0.0%");
 
             this.label_valo.Text = this.MyPortfolio.GetPortfolioValue().ToString("C");
-            this.label_gain.Text = "(" + sign + gainLoss.ToString("C") + " " + sign + gainLossPct.ToString("P1") + ")";
+
+            this.label_gain.Text = $@"({gainLoss} {gainLossPct})";
+            this.label_gain.ForeColor = gL >= 0 ? Color.LimeGreen : Color.Tomato;
+
         }
 
         private async Task RefreshSelectedStockList()
