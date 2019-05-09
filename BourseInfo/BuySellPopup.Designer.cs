@@ -40,6 +40,16 @@
             // inputQuantity
             // 
             this.inputQuantity.Location = new System.Drawing.Point(67, 12);
+            this.inputQuantity.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
+            this.inputQuantity.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.inputQuantity.Name = "inputQuantity";
             this.inputQuantity.Size = new System.Drawing.Size(65, 20);
             this.inputQuantity.TabIndex = 0;
