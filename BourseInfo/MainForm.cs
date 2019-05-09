@@ -47,7 +47,12 @@
         {
             this.InitializeComponent();
 
-            CultureInfo info = new CultureInfo("fr-FR");
+            // Keep default culture (for decimal keyboard usage) but set euro as currency symbol
+            //CultureInfo info = new CultureInfo("fr-FR");
+            var info = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+            info.NumberFormat.CurrencySymbol = "€";
+            info.NumberFormat.CurrencyNegativePattern = 8;
+            info.NumberFormat.CurrencyPositivePattern = 3;
             Thread.CurrentThread.CurrentCulture = info;
 
             this.dataTable = new DataTable();
