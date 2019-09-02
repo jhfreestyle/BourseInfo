@@ -60,6 +60,7 @@
             this.label_valo = new System.Windows.Forms.Label();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.label_gain = new System.Windows.Forms.Label();
+            this.HighlightColumn = new System.Data.DataColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
@@ -180,7 +181,8 @@
             // 
             this.stocksNameTable.Columns.AddRange(new System.Data.DataColumn[] {
             this.columnId,
-            this.columnName});
+            this.columnName,
+            this.HighlightColumn});
             this.stocksNameTable.Constraints.AddRange(new System.Data.Constraint[] {
             new System.Data.UniqueConstraint("Constraint1", new string[] {
                         "Id"}, true)});
@@ -332,6 +334,12 @@
             this.label_gain.TabIndex = 11;
             this.label_gain.Text = "0.00 €";
             // 
+            // HighlightColumn
+            // 
+            this.HighlightColumn.Caption = "Highlight";
+            this.HighlightColumn.ColumnName = "Highlight";
+            this.HighlightColumn.DataType = typeof(bool);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -395,6 +403,7 @@
         private System.Windows.Forms.ToolStripMenuItem buyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sellToolStripMenuItem;
         private System.Windows.Forms.Label label_gain;
+        private System.Data.DataColumn HighlightColumn;
     }
 }
 

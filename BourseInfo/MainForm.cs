@@ -62,6 +62,7 @@
             this.dataTable.Columns.Add("Ticker");
             this.dataTable.Columns.Add("Value", typeof(decimal));
             this.dataTable.Columns.Add("Pct", typeof(decimal));
+            this.dataTable.Columns.Add("Highlight", typeof(bool));
 
             this.stockBindingSource.DataSource = this.dataTable;
 
@@ -236,7 +237,7 @@
             }
         }
 
-        private void SaveFile()
+        public void SaveFile()
         {
             this.dataSet.WriteXml(DataFilePath);
         }
@@ -382,7 +383,6 @@
             }
 
             this.SaveFile();
-
         }
 
         private void MyNotifyIconMouseDown(object sender, MouseEventArgs e)

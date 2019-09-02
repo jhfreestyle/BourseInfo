@@ -123,6 +123,8 @@ namespace PortfolioManagement
 
         public DateTime LastUpdate { get; set; }
 
+        public bool Highlight { get; set; }
+
         [JsonIgnore]
         public string Info { get; set; }
 

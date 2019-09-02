@@ -169,11 +169,10 @@ namespace BourseInfo
         private void highlightToolStripMenuItemClick(object sender, EventArgs e)
         {
             UserControlStock c = (UserControlStock)((Control)this.contextMenuStripNotif.Tag).Parent;
-            var fonStyle = c.LName.Font.Bold ? FontStyle.Regular : FontStyle.Bold;
+            Stock s = this.mainForm.GetStockById(c.Id);
+            s.Highlight = c.ToggleHighlight();
 
-            c.LName.Font = new Font(c.LName.Font.FontFamily, c.LName.Font.Size, fonStyle);
-            c.LValue.Font = new Font(c.LValue.Font.FontFamily, c.LValue.Font.Size, fonStyle);
-            c.LPct.Font = new Font(c.LPct.Font.FontFamily, c.LPct.Font.Size, fonStyle);
+            this.mainForm.SaveFile();
         }
     }
 }
