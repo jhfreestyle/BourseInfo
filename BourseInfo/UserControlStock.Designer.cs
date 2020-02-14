@@ -1,4 +1,6 @@
-﻿namespace BourseInfo
+﻿using System.Windows.Forms;
+
+namespace BourseInfo
 {
     using System.ComponentModel;
 

@@ -27,7 +27,8 @@ namespace BourseInfo
             this.StartPosition = FormStartPosition.Manual;
 
             var wa = Screen.PrimaryScreen.WorkingArea;
-            this.Location = new Point((int)Math.Floor((wa.Right - this.Width) * 0.99), (int)Math.Floor((wa.Bottom - this.Height) * 0.99));
+            this.Location = new Point((int) Math.Floor((wa.Right - this.Width) * 0.99),
+                (int) Math.Floor((wa.Bottom - this.Height) * 0.99));
 
             this.mainForm = mainForm;
         }
@@ -36,27 +37,32 @@ namespace BourseInfo
 
         public void RefreshContent(Dictionary<string, Stock> stockData)
         {
+            // update background
+            this.BackColor = mainForm.Theme.NotificationBackground;
+
             this.tableLayoutPanel.Controls.Clear();
             foreach (var id in this.StockList)
             {
-                UserControlStock control = new UserControlStock(id);
+                UserControlStock control = new UserControlStock(id, mainForm.Theme);
 
                 var s = stockData.Values.FirstOrDefault(e => e.Id == id);
 
                 if (s != null)
                 {
                     control.LName.Text = s.Name;
-                    control.LValue.Text = Math.Round(s.Value, 3, MidpointRounding.AwayFromZero).ToString("G29") + "€"; // G29 to remove last zero if it is zero.
+                    control.LValue.Text =
+                        Math.Round(s.Value, 3, MidpointRounding.AwayFromZero).ToString("G29") +
+                        "€"; // G29 to remove last zero if it is zero.
                     control.LPct.Text = Math.Round(s.Pct, 2) + "%";
 
                     if (s.Pct > 0)
                     {
-                        control.LPct.ForeColor = Color.LimeGreen;
+                        control.LPct.ForeColor = mainForm.Theme.Positive;
                         control.LPct.Text = "+" + control.LPct.Text;
                     }
                     else if (s.Pct < 0)
                     {
-                        control.LPct.ForeColor = Color.Tomato;
+                        control.LPct.ForeColor = mainForm.Theme.Negative;
                     }
 
                     this.tableLayoutPanel.Controls.Add(control);
@@ -77,12 +83,16 @@ namespace BourseInfo
         private void RefreshLocation()
         {
             var wa = Screen.PrimaryScreen.WorkingArea;
-            this.Location = new Point((int)Math.Floor((wa.Right - this.Width) * 0.99), (int)Math.Floor((wa.Bottom - this.Height) * 0.99));
+            this.Location = new Point((int) Math.Floor((wa.Right - this.Width) * 0.99),
+                (int) Math.Floor((wa.Bottom - this.Height) * 0.99));
         }
 
         private void NotificationWindowPaint(object sender, PaintEventArgs e)
         {
             // e.Graphics.DrawRectangle(new Pen(Color.DarkSlateGray,2), this.DisplayRectangle.X, this.DisplayRectangle.Y, this.DisplayRectangle.Width - 1, this.DisplayRectangle.Height - 1);
+            
+            var sb = new SolidBrush(Color.FromArgb(100, 100, 100, 100));
+            e.Graphics.FillRectangle(sb, this.DisplayRectangle);
         }
 
         private void NotificationWindowVisibleChanged(object sender, EventArgs e)
@@ -101,18 +111,19 @@ namespace BourseInfo
 
         private void NotificationFadeEffect(bool fadeOut)
         {
+
             int duration = 100; // in milliseconds
             int steps = 10;
-            Timer timer = new Timer { Interval = duration / steps };
+            Timer timer = new Timer {Interval = duration / steps};
 
             int currentStep = 0;
             timer.Tick += (arg1, arg2) =>
             {
-                this.Opacity = !fadeOut ? (double)currentStep / steps : 1 - ((double)currentStep / steps);
+                this.Opacity = !fadeOut ? (double) currentStep / steps : 1 - ((double) currentStep / steps);
 
                 currentStep++;
 
-                if (currentStep >= steps)
+                if (currentStep > steps)
                 {
                     timer.Stop();
                     timer.Dispose();
@@ -154,21 +165,21 @@ namespace BourseInfo
 
         private void RemoveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            UserControlStock c = (UserControlStock)((Control)this.contextMenuStripNotif.Tag).Parent;
+            UserControlStock c = (UserControlStock) ((Control) this.contextMenuStripNotif.Tag).Parent;
             this.mainForm.RemoveStockFromNotif(c.Id);
             this.RefreshLocation();
         }
 
         private void OpenBrowserToolStripMenuItemClick(object sender, EventArgs e)
         {
-            UserControlStock c = (UserControlStock)((Control)this.contextMenuStripNotif.Tag).Parent;
+            UserControlStock c = (UserControlStock) ((Control) this.contextMenuStripNotif.Tag).Parent;
             Stock s = this.mainForm.GetStockById(c.Id);
             System.Diagnostics.Process.Start("https://www.boursorama.com/cours/1rP" + s.Ticker);
         }
 
         private void highlightToolStripMenuItemClick(object sender, EventArgs e)
         {
-            UserControlStock c = (UserControlStock)((Control)this.contextMenuStripNotif.Tag).Parent;
+            UserControlStock c = (UserControlStock) ((Control) this.contextMenuStripNotif.Tag).Parent;
             Stock s = this.mainForm.GetStockById(c.Id);
             s.Highlight = c.ToggleHighlight();
 

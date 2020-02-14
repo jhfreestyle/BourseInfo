@@ -9,7 +9,7 @@ namespace PortfolioManagement
 {
     using Newtonsoft.Json;
 
-    public partial class Portfolio
+    public class Portfolio
     {
         public List<Transaction> Ledger;
 

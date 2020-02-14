@@ -44,6 +44,7 @@
             this.stocksNameTable = new System.Data.DataTable();
             this.columnId = new System.Data.DataColumn();
             this.columnName = new System.Data.DataColumn();
+            this.HighlightColumn = new System.Data.DataColumn();
             this.StocksInNotifTable = new System.Data.DataTable();
             this.IdColumn = new System.Data.DataColumn();
             this.myNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -60,7 +61,7 @@
             this.label_valo = new System.Windows.Forms.Label();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.label_gain = new System.Windows.Forms.Label();
-            this.HighlightColumn = new System.Data.DataColumn();
+            this.comboBoxTheme = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
@@ -72,11 +73,11 @@
             // 
             // textBoxLastUpdate
             // 
-            this.textBoxLastUpdate.Location = new System.Drawing.Point(258, 13);
+            this.textBoxLastUpdate.Location = new System.Drawing.Point(258, 11);
             this.textBoxLastUpdate.Name = "textBoxLastUpdate";
             this.textBoxLastUpdate.ReadOnly = true;
             this.textBoxLastUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLastUpdate.Size = new System.Drawing.Size(198, 20);
+            this.textBoxLastUpdate.Size = new System.Drawing.Size(113, 20);
             this.textBoxLastUpdate.TabIndex = 1;
             // 
             // buttonLoad
@@ -200,6 +201,12 @@
             // 
             this.columnName.Caption = "Name";
             this.columnName.ColumnName = "Name";
+            // 
+            // HighlightColumn
+            // 
+            this.HighlightColumn.Caption = "Highlight";
+            this.HighlightColumn.ColumnName = "Highlight";
+            this.HighlightColumn.DataType = typeof(bool);
             // 
             // StocksInNotifTable
             // 
@@ -334,17 +341,22 @@
             this.label_gain.TabIndex = 11;
             this.label_gain.Text = "0.00 €";
             // 
-            // HighlightColumn
+            // comboBoxTheme
             // 
-            this.HighlightColumn.Caption = "Highlight";
-            this.HighlightColumn.ColumnName = "Highlight";
-            this.HighlightColumn.DataType = typeof(bool);
+            this.comboBoxTheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTheme.FormattingEnabled = true;
+            this.comboBoxTheme.Location = new System.Drawing.Point(377, 11);
+            this.comboBoxTheme.Name = "comboBoxTheme";
+            this.comboBoxTheme.Size = new System.Drawing.Size(78, 21);
+            this.comboBoxTheme.TabIndex = 12;
+            this.comboBoxTheme.SelectionChangeCommitted += new System.EventHandler(this.comboBoxThemeSelectedIndexChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 438);
+            this.Controls.Add(this.comboBoxTheme);
             this.Controls.Add(this.label_gain);
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.label_valo);
@@ -404,6 +416,7 @@
         private System.Windows.Forms.ToolStripMenuItem sellToolStripMenuItem;
         private System.Windows.Forms.Label label_gain;
         private System.Data.DataColumn HighlightColumn;
+        private System.Windows.Forms.ComboBox comboBoxTheme;
     }
 }
 

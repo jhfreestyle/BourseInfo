@@ -59,6 +59,7 @@
     <Compile Include="BuySellPopup.Designer.cs">
       <DependentUpon>BuySellPopup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Theme.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

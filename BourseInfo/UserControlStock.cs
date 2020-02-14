@@ -6,10 +6,10 @@ namespace BourseInfo
 {
     public sealed partial class UserControlStock : UserControl
     {
-        public UserControlStock(string id)
+        public UserControlStock(string id, Theme theme)
         {
             this.InitializeComponent();
-            this.ForeColor = Color.LightGray;
+            this.ForeColor = theme.Neutral;
             this.Id = id;
         }
 

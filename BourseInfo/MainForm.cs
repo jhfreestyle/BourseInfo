@@ -21,6 +21,8 @@
 
     public partial class MainForm : Form
     {
+        public Theme Theme;
+
         private const string DataFilePath = "data.xml";
 
         private readonly DataTable dataTable;
@@ -42,6 +44,11 @@
                 "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compb/issues.json?sort=issue.fullName,asc&pageSize=300",
                 "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compc/issues.json?sort=issue.fullName,asc&pageSize=300",
             };
+            
+            // TO ADD
+            //https://api.lecho.be/services/search/fund?q=lyxor%20s%26p%20&pageSize=10000 -> fonds
+            //https://api.lecho.be/services/stocks?quotes=urn:issue:150011694,urn:issue:330188109 -> un fond lyxor
+            //https://api.lecho.be/services/search/company-risk?q=saint%20gobin&page=0&pageSize=200&lang=fr -> risk
 
         public MainForm()
         {
@@ -54,6 +61,9 @@
             info.NumberFormat.CurrencyNegativePattern = 8;
             info.NumberFormat.CurrencyPositivePattern = 3;
             Thread.CurrentThread.CurrentCulture = info;
+
+            // Load Theme colors
+            this.Theme = new Theme(Theme.ThemeName.Light);
 
             this.dataTable = new DataTable();
             this.dataTable.Columns.Add("Id");
@@ -76,6 +86,7 @@
             this.notificationWindow = new NotificationWindow(idList, this);
 
             this.InitializeComboBoxTime();
+            this.InitializeComboBoxTheme();
         }
 
         private void InitializeComboBoxTime()
@@ -96,6 +107,12 @@
                 new { Text = "10m", Value = "600" },
             };
             this.comboBoxTime.SelectedIndex = 0;
+        }
+
+        private void InitializeComboBoxTheme()
+        {
+            this.comboBoxTheme.DataSource = Enum.GetValues(typeof(Theme.ThemeName));
+            this.comboBoxTheme.SelectedIndex = (int)this.Theme.Name;
         }
 
 
@@ -153,7 +170,7 @@
             this.label_valo.Text = this.MyPortfolio.GetPortfolioValue().ToString("C");
 
             this.label_gain.Text = $@"({gainLoss} {gainLossPct})";
-            this.label_gain.ForeColor = gL >= 0 ? Color.LimeGreen : Color.Tomato;
+            this.label_gain.ForeColor = gL >= 0 ? Theme.Positive : Theme.Negative;
 
         }
 
@@ -231,8 +248,8 @@
                 {
                     e.CellStyle.ForeColor =
                         (decimal)this.dataGridView.Rows[e.RowIndex].Cells["pctDataGridViewTextBoxColumn"].Value > 0
-                            ? Color.LawnGreen
-                            : Color.Red;
+                            ? Theme.Positive
+                            : Theme.Negative;
                 }
             }
         }
@@ -406,6 +423,13 @@
                 this.mainTimer.Enabled = true;
             }
         }
+        
+        private void comboBoxThemeSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.Theme = new Theme((Theme.ThemeName)this.comboBoxTheme.SelectedItem);
+            RefreshUI();
+        }
+
 
         private void TextBoxSearchTextChanged(object sender, EventArgs e)
         {
@@ -434,7 +458,7 @@
             if (string.IsNullOrEmpty(this.textBoxSearch.Text))
             {
                 this.textBoxSearch.Text = @"Type to search...";
-                this.textBoxSearch.ForeColor = Color.Gray;
+                this.textBoxSearch.ForeColor = Theme.TextBox;
             }
         }
 
