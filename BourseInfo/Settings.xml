@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<urls>
+  <url name="Index" type="JSON">https://lesechos-bourse-fo-cdn.wlb.aw.atos.net/streaming/cours/getHeaderBourse</url>
+  <url name="Marché Libre" country="France" type="JSON">https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.marchelibre/issues.json?pageSize=300</url>
+  <url name="Alternext" country="France" type="JSON">https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.alternext.mlst/issues.json?pageSize=300</url>
+  <url name="CAC40" country="France" type="JSON">https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.paris.shares.cac40/issues.json?sort=issue.fullName,asc&amp;pageSize=100</url>
+  <url name="Comp A" country="France" type="JSON">https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compa/issues.json?sort=issue.fullName,asc&amp;pageSize=300</url>
+  <url name="Comp B" country="France" type="JSON">https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compb/issues.json?sort=issue.fullName,asc&amp;pageSize=300</url>
+  <url name="Comp C" country="France" type="JSON">https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compc/issues.json?sort=issue.fullName,asc&amp;pageSize=300</url>
+  <url name="Amsterdam 1" country="Amsterdam" type="JSON">https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.amsterdam.shares.mlst/issues.json?sort=issue.fullName,asc&amp;pageSize=200&amp;page=0</url>
+  <url name="Amsterdam 2" country="Amsterdam" type="JSON">https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.amsterdam.shares.mlst/issues.json?sort=issue.fullName,asc&amp;pageSize=200&amp;page=1</url>
+  <url name="Amsterdam 3" country="Amsterdam" type="JSON">https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.amsterdam.shares.mlst/issues.json?sort=issue.fullName,asc&amp;pageSize=200&amp;page=2</url>
+</urls>
+
+

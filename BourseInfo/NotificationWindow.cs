@@ -45,7 +45,7 @@ namespace BourseInfo
             {
                 UserControlStock control = new UserControlStock(id, mainForm.Theme);
 
-                var s = stockData.Values.FirstOrDefault(e => e.Id == id);
+                var s = stockData?.Values.FirstOrDefault(e => e.Id == id);
 
                 if (s != null)
                 {

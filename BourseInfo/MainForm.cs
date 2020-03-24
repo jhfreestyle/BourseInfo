@@ -11,7 +11,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-
+    using System.Xml;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -24,6 +24,8 @@
         public Theme Theme;
 
         private const string DataFilePath = "data.xml";
+        private const string SettingsFilePath = "Settings.xml";
+        private Dictionary<string, string> jsonUrls;
 
         private readonly DataTable dataTable;
         private readonly NotificationWindow notificationWindow;
@@ -31,20 +33,34 @@
 
         public Portfolio MyPortfolio;
 
-        public readonly List<string> JsonUrls = 
-            new List<string>
+        public Dictionary<string, string> JsonUrls 
+        {
+            get
             {
-                // Indices
-                "https://lesechos-bourse-fo-cdn.wlb.aw.atos.net/streaming/cours/getHeaderBourse",
-                // euronext, alternext, cac40, eurolist
-                "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.marchelibre/issues.json?pageSize=300",
-                "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.alternext.mlst/issues.json?pageSize=300",
-                "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.paris.shares.cac40/issues.json?sort=issue.fullName,asc&pageSize=100",
-                "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compa/issues.json?sort=issue.fullName,asc&pageSize=300",
-                "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compb/issues.json?sort=issue.fullName,asc&pageSize=300",
-                "https://api.lecho.be/services/stockmarketgroup/urn:stockmarketgroup:euronext.france.shares.french.compc/issues.json?sort=issue.fullName,asc&pageSize=300",
-            };
-            
+                if (jsonUrls != null)
+                {
+                    return jsonUrls;
+                }
+                else
+                {
+                    jsonUrls = new Dictionary<string, string>();
+                    XmlDocument xmlSettings = new XmlDocument();
+                    xmlSettings.Load(SettingsFilePath);
+                    XmlNodeList urlNodes = xmlSettings.DocumentElement.SelectNodes("/urls/url");
+                    foreach (XmlNode urlNode in urlNodes)
+                    {
+                        string url = urlNode.InnerText;
+                        string name = urlNode.Attributes["name"]?.InnerText;
+                        string country = urlNode.Attributes["country"]?.InnerText;
+                        string type = urlNode.Attributes["type"]?.InnerText;
+
+                        jsonUrls.Add(url, name);
+                    }
+                    return jsonUrls;
+                }
+            }
+        }
+        
             // TO ADD
             //https://api.lecho.be/services/search/fund?q=lyxor%20s%26p%20&pageSize=10000 -> fonds
             //https://api.lecho.be/services/stocks?quotes=urn:issue:150011694,urn:issue:330188109 -> un fond lyxor
@@ -162,6 +178,11 @@
 
         private void RefreshValo()
         {
+            if (this.MyPortfolio == null)
+            {
+                return;
+            }
+
             var gL = this.MyPortfolio.GetPortfolioGainLoss();
 
             var gainLoss = gL.ToString("+0.00 €;-0.00 €");
@@ -211,9 +232,11 @@
             var results = new List<Stock>[n];
 
             // Create and start the tasks
-            for (int i = 0; i < n; i++)
+            int k = 0;
+            foreach (var url in JsonUrls.Keys)
             {
-                tasks[i] = WebController.GetStocksAsync(this.JsonUrls[i]);
+                tasks[k] = WebController.GetStocksAsync(url);
+                k++;
             }
 
             // Wait for each task to finish and populate stockList
@@ -261,7 +284,7 @@
 
         private void SavePortfolio()
         {
-            var json = JsonConvert.SerializeObject(this.MyPortfolio, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(this.MyPortfolio, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText("portfolio.json", json);
         }
 
@@ -470,7 +493,7 @@
 
         private void RefreshLastTime()
         {
-            this.textBoxLastUpdate.Text = this.stockList.Values.Max(s => s.LastUpdate) + "\r\n";
+            this.textBoxLastUpdate.Text = this.stockList?.Values.Max(s => s.LastUpdate) + "\r\n";
         }
 
         private void UpdateLoadingPercentage(int i, int n)

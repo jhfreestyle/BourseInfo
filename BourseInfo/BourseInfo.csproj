@@ -123,6 +123,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Settings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Close_Icon_Circle.png" />
     <Content Include="ico.ico" />
   </ItemGroup>
