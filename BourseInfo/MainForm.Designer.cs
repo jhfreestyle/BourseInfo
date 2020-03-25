@@ -73,18 +73,20 @@
             // 
             // textBoxLastUpdate
             // 
-            this.textBoxLastUpdate.Location = new System.Drawing.Point(258, 11);
+            this.textBoxLastUpdate.Location = new System.Drawing.Point(473, 20);
+            this.textBoxLastUpdate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.textBoxLastUpdate.Name = "textBoxLastUpdate";
             this.textBoxLastUpdate.ReadOnly = true;
             this.textBoxLastUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLastUpdate.Size = new System.Drawing.Size(113, 20);
+            this.textBoxLastUpdate.Size = new System.Drawing.Size(204, 29);
             this.textBoxLastUpdate.TabIndex = 1;
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(11, 11);
+            this.buttonLoad.Location = new System.Drawing.Point(20, 20);
+            this.buttonLoad.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(66, 23);
+            this.buttonLoad.Size = new System.Drawing.Size(159, 42);
             this.buttonLoad.TabIndex = 2;
             this.buttonLoad.Text = "Load Data";
             this.buttonLoad.UseVisualStyleBackColor = true;
@@ -105,11 +107,13 @@
             this.valueDataGridViewTextBoxColumn,
             this.pctDataGridViewTextBoxColumn});
             this.dataGridView.DataSource = this.stockBindingSource;
-            this.dataGridView.Location = new System.Drawing.Point(12, 67);
+            this.dataGridView.Location = new System.Drawing.Point(22, 124);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersVisible = false;
-            this.dataGridView.Size = new System.Drawing.Size(443, 359);
+            this.dataGridView.RowHeadersWidth = 72;
+            this.dataGridView.Size = new System.Drawing.Size(812, 663);
             this.dataGridView.TabIndex = 4;
             this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewCellDoubleClick);
             this.dataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridViewCellFormatting);
@@ -119,33 +123,38 @@
             // 
             this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.MinimumWidth = 9;
             this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             this.idDataGridViewTextBoxColumn.ReadOnly = true;
             this.idDataGridViewTextBoxColumn.Visible = false;
+            this.idDataGridViewTextBoxColumn.Width = 175;
             // 
             // isinDataGridViewTextBoxColumn
             // 
             this.isinDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.isinDataGridViewTextBoxColumn.DataPropertyName = "Isin";
             this.isinDataGridViewTextBoxColumn.HeaderText = "Isin";
+            this.isinDataGridViewTextBoxColumn.MinimumWidth = 9;
             this.isinDataGridViewTextBoxColumn.Name = "isinDataGridViewTextBoxColumn";
             this.isinDataGridViewTextBoxColumn.ReadOnly = true;
-            this.isinDataGridViewTextBoxColumn.Width = 48;
+            this.isinDataGridViewTextBoxColumn.Width = 83;
             // 
             // tickerDataGridViewTextBoxColumn
             // 
             this.tickerDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.tickerDataGridViewTextBoxColumn.DataPropertyName = "Ticker";
             this.tickerDataGridViewTextBoxColumn.HeaderText = "Ticker";
+            this.tickerDataGridViewTextBoxColumn.MinimumWidth = 9;
             this.tickerDataGridViewTextBoxColumn.Name = "tickerDataGridViewTextBoxColumn";
             this.tickerDataGridViewTextBoxColumn.ReadOnly = true;
-            this.tickerDataGridViewTextBoxColumn.Width = 62;
+            this.tickerDataGridViewTextBoxColumn.Width = 107;
             // 
             // nameDataGridViewTextBoxColumn
             // 
             this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
             this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.MinimumWidth = 9;
             this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
             this.nameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -154,18 +163,20 @@
             this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
             this.valueDataGridViewTextBoxColumn.HeaderText = "Value";
+            this.valueDataGridViewTextBoxColumn.MinimumWidth = 9;
             this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
             this.valueDataGridViewTextBoxColumn.ReadOnly = true;
-            this.valueDataGridViewTextBoxColumn.Width = 59;
+            this.valueDataGridViewTextBoxColumn.Width = 104;
             // 
             // pctDataGridViewTextBoxColumn
             // 
             this.pctDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.pctDataGridViewTextBoxColumn.DataPropertyName = "Pct";
             this.pctDataGridViewTextBoxColumn.HeaderText = "Pct";
+            this.pctDataGridViewTextBoxColumn.MinimumWidth = 9;
             this.pctDataGridViewTextBoxColumn.Name = "pctDataGridViewTextBoxColumn";
             this.pctDataGridViewTextBoxColumn.ReadOnly = true;
-            this.pctDataGridViewTextBoxColumn.Width = 48;
+            this.pctDataGridViewTextBoxColumn.Width = 81;
             // 
             // stockBindingSource
             // 
@@ -229,17 +240,18 @@
             // 
             // companyNb
             // 
-            this.companyNb.Location = new System.Drawing.Point(374, 43);
+            this.companyNb.Location = new System.Drawing.Point(686, 79);
             this.companyNb.Margin = new System.Windows.Forms.Padding(0);
             this.companyNb.Name = "companyNb";
-            this.companyNb.Size = new System.Drawing.Size(81, 18);
+            this.companyNb.Size = new System.Drawing.Size(149, 33);
             this.companyNb.TabIndex = 5;
             this.companyNb.Text = "0 company";
             this.companyNb.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(350, 186);
+            this.pictureBox1.Location = new System.Drawing.Point(642, 343);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(214, 133);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -249,6 +261,7 @@
             // 
             // dataGridContextMenu
             // 
+            this.dataGridContextMenu.ImageScalingSize = new System.Drawing.Size(28, 28);
             this.dataGridContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemAddToNotif,
             this.toolStripMenuItemRemoveFromNotif,
@@ -256,33 +269,33 @@
             this.sellToolStripMenuItem});
             this.dataGridContextMenu.Name = "dataGridContextMenu";
             this.dataGridContextMenu.ShowImageMargin = false;
-            this.dataGridContextMenu.Size = new System.Drawing.Size(190, 92);
+            this.dataGridContextMenu.Size = new System.Drawing.Size(304, 148);
             // 
             // toolStripMenuItemAddToNotif
             // 
             this.toolStripMenuItemAddToNotif.Name = "toolStripMenuItemAddToNotif";
-            this.toolStripMenuItemAddToNotif.Size = new System.Drawing.Size(189, 22);
+            this.toolStripMenuItemAddToNotif.Size = new System.Drawing.Size(303, 36);
             this.toolStripMenuItemAddToNotif.Text = "Add To Notification";
             this.toolStripMenuItemAddToNotif.Click += new System.EventHandler(this.ToolStripMenuItemAddToNotifClick);
             // 
             // toolStripMenuItemRemoveFromNotif
             // 
             this.toolStripMenuItemRemoveFromNotif.Name = "toolStripMenuItemRemoveFromNotif";
-            this.toolStripMenuItemRemoveFromNotif.Size = new System.Drawing.Size(189, 22);
+            this.toolStripMenuItemRemoveFromNotif.Size = new System.Drawing.Size(303, 36);
             this.toolStripMenuItemRemoveFromNotif.Text = "Remove From Notification";
             this.toolStripMenuItemRemoveFromNotif.Click += new System.EventHandler(this.ToolStripMenuItemRemoveFromNotifClick);
             // 
             // buyToolStripMenuItem
             // 
             this.buyToolStripMenuItem.Name = "buyToolStripMenuItem";
-            this.buyToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.buyToolStripMenuItem.Size = new System.Drawing.Size(303, 36);
             this.buyToolStripMenuItem.Text = "Buy";
             this.buyToolStripMenuItem.Click += new System.EventHandler(this.buyToolStripMenuItem_Click);
             // 
             // sellToolStripMenuItem
             // 
             this.sellToolStripMenuItem.Name = "sellToolStripMenuItem";
-            this.sellToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.sellToolStripMenuItem.Size = new System.Drawing.Size(303, 36);
             this.sellToolStripMenuItem.Text = "Sell";
             this.sellToolStripMenuItem.Click += new System.EventHandler(this.sellToolStripMenuItem_Click);
             // 
@@ -294,28 +307,30 @@
             // 
             this.comboBoxTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTime.FormattingEnabled = true;
-            this.comboBoxTime.Location = new System.Drawing.Point(165, 11);
+            this.comboBoxTime.Location = new System.Drawing.Point(303, 20);
+            this.comboBoxTime.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.comboBoxTime.Name = "comboBoxTime";
-            this.comboBoxTime.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxTime.Size = new System.Drawing.Size(156, 32);
             this.comboBoxTime.TabIndex = 7;
             this.comboBoxTime.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTimeSelectedIndexChanged);
             // 
             // buttonUpdate
             // 
-            this.buttonUpdate.Location = new System.Drawing.Point(83, 11);
+            this.buttonUpdate.Location = new System.Drawing.Point(191, 20);
+            this.buttonUpdate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(76, 23);
+            this.buttonUpdate.Size = new System.Drawing.Size(100, 42);
             this.buttonUpdate.TabIndex = 8;
-            this.buttonUpdate.Text = "Update Data";
+            this.buttonUpdate.Text = "Refresh";
             this.buttonUpdate.UseVisualStyleBackColor = true;
             this.buttonUpdate.Click += new System.EventHandler(this.RefreshSelectedStockList);
             // 
             // label_valo
             // 
-            this.label_valo.Location = new System.Drawing.Point(162, 43);
+            this.label_valo.Location = new System.Drawing.Point(297, 79);
             this.label_valo.Margin = new System.Windows.Forms.Padding(0);
             this.label_valo.Name = "label_valo";
-            this.label_valo.Size = new System.Drawing.Size(90, 18);
+            this.label_valo.Size = new System.Drawing.Size(165, 33);
             this.label_valo.TabIndex = 9;
             this.label_valo.Text = "0.00 €";
             this.label_valo.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -323,9 +338,10 @@
             // textBoxSearch
             // 
             this.textBoxSearch.ForeColor = System.Drawing.Color.Gray;
-            this.textBoxSearch.Location = new System.Drawing.Point(13, 40);
+            this.textBoxSearch.Location = new System.Drawing.Point(24, 74);
+            this.textBoxSearch.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(146, 20);
+            this.textBoxSearch.Size = new System.Drawing.Size(264, 29);
             this.textBoxSearch.TabIndex = 10;
             this.textBoxSearch.Text = "Type to search...";
             this.textBoxSearch.TextChanged += new System.EventHandler(this.TextBoxSearchTextChanged);
@@ -334,10 +350,10 @@
             // 
             // label_gain
             // 
-            this.label_gain.Location = new System.Drawing.Point(258, 43);
+            this.label_gain.Location = new System.Drawing.Point(473, 79);
             this.label_gain.Margin = new System.Windows.Forms.Padding(0);
             this.label_gain.Name = "label_gain";
-            this.label_gain.Size = new System.Drawing.Size(116, 18);
+            this.label_gain.Size = new System.Drawing.Size(213, 33);
             this.label_gain.TabIndex = 11;
             this.label_gain.Text = "0.00 €";
             // 
@@ -345,17 +361,18 @@
             // 
             this.comboBoxTheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTheme.FormattingEnabled = true;
-            this.comboBoxTheme.Location = new System.Drawing.Point(377, 11);
+            this.comboBoxTheme.Location = new System.Drawing.Point(691, 20);
+            this.comboBoxTheme.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.comboBoxTheme.Name = "comboBoxTheme";
-            this.comboBoxTheme.Size = new System.Drawing.Size(78, 21);
+            this.comboBoxTheme.Size = new System.Drawing.Size(140, 32);
             this.comboBoxTheme.TabIndex = 12;
             this.comboBoxTheme.SelectionChangeCommitted += new System.EventHandler(this.comboBoxThemeSelectedIndexChanged);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 438);
+            this.ClientSize = new System.Drawing.Size(854, 809);
             this.Controls.Add(this.comboBoxTheme);
             this.Controls.Add(this.label_gain);
             this.Controls.Add(this.textBoxSearch);
@@ -368,6 +385,7 @@
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.textBoxLastUpdate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "MainForm";
             this.Text = "InfoBourse - By Jean";
             this.Resize += new System.EventHandler(this.MainFormResize);

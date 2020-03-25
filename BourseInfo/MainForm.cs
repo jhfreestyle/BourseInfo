@@ -120,7 +120,19 @@
                 new { Text = "3m", Value = "180" },
                 new { Text = "4m", Value = "240" },
                 new { Text = "5m", Value = "300" },
+                new { Text = "7m", Value = "420" },
                 new { Text = "10m", Value = "600" },
+                new { Text = "15m", Value = "900" },
+                new { Text = "20m", Value = "1200" },
+                new { Text = "30m", Value = "1800" },
+                new { Text = "40m", Value = "2400" },
+                new { Text = "1h", Value = "3600" },
+                new { Text = "2h", Value = "7200" },
+                new { Text = "4h", Value = "14400" },
+                new { Text = "6h", Value = "21600" },
+                new { Text = "8h", Value = "28800" },
+                new { Text = "10h", Value = "36000" },
+                new { Text = "12h", Value = "43200" },
             };
             this.comboBoxTime.SelectedIndex = 0;
         }
