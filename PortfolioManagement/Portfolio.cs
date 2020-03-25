@@ -94,10 +94,11 @@ namespace PortfolioManagement
         /// <param name="item">
         /// Json Object (returned by JObject.Parse() method) used to build the <see cref="Stock"/>
         /// </param>
-        public Stock(dynamic item)
+        public Stock(dynamic item, string market)
         {
             if (item?.values != null)
             {
+                this.Market = market;
                 this.Id = GetStockId(item.urn.ToString());
                 this.Isin = item.isinCode;
                 this.Name = item.fullName._default;
@@ -109,6 +110,8 @@ namespace PortfolioManagement
             }
         }
         
+        public string Market { get; set; }
+
         public string Id { get; set; }
 
         public string Isin { get; set; }

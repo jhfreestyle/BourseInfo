@@ -54,7 +54,7 @@
                         string country = urlNode.Attributes["country"]?.InnerText;
                         string type = urlNode.Attributes["type"]?.InnerText;
 
-                        jsonUrls.Add(url, name);
+                        jsonUrls.Add(name, url);
                     }
                     return jsonUrls;
                 }
@@ -79,9 +79,10 @@
             Thread.CurrentThread.CurrentCulture = info;
 
             // Load Theme colors
-            this.Theme = new Theme(Theme.ThemeName.Light);
+            this.Theme = new Theme(Theme.ThemeName.Dark);
 
             this.dataTable = new DataTable();
+            this.dataTable.Columns.Add("Market");
             this.dataTable.Columns.Add("Id");
             this.dataTable.Columns.Add("Isin");
             this.dataTable.Columns.Add("Name");
@@ -245,9 +246,10 @@
 
             // Create and start the tasks
             int k = 0;
-            foreach (var url in JsonUrls.Keys)
+            foreach (var market in JsonUrls.Keys)
             {
-                tasks[k] = WebController.GetStocksAsync(url);
+                var url = JsonUrls[market];
+                tasks[k] = WebController.GetStocksAsync(market, url);
                 k++;
             }
 
@@ -270,7 +272,7 @@
 
             foreach (var s in this.stockList.Values.OrderBy(o => o.Name))
             {
-                this.dataTable.Rows.Add(s.Id, s.Isin, s.Name, s.Ticker, s.Value, s.Pct);
+                this.dataTable.Rows.Add(s.Market, s.Id, s.Isin, s.Name, s.Ticker, s.Value, s.Pct);
             }
         }
 
@@ -475,6 +477,7 @@
                 // stockBindingSource.DataSource = _stockList.Where(s => s.Name.Contains(textBoxSearch.Text)).ToList();
                 this.stockBindingSource.Filter = "Name LIKE '%" + this.textBoxSearch.Text + "%' OR Ticker LIKE '%"
                                                  + this.textBoxSearch.Text + "%' OR Isin LIKE '%"
+                                                 + this.textBoxSearch.Text + "%' OR Market LIKE '%"
                                                  + this.textBoxSearch.Text + "%'";
                 this.RefreshNbCompany();
             }

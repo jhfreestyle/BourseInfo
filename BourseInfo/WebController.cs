@@ -65,7 +65,7 @@ namespace BourseInfo
             return string.Empty;
         }
 
-        public static async Task<List<Stock>> GetStocksAsync(string uri)
+        public static async Task<List<Stock>> GetStocksAsync(string market, string uri)
         {
             var stockList = new List<Stock>();
 
@@ -81,7 +81,7 @@ namespace BourseInfo
                 {
                     foreach (var item in items)
                     {
-                        stockList.Add(new Stock(item));
+                        stockList.Add(new Stock(item, market));
                     }
                 }
             }

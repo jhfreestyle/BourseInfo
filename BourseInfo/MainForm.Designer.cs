@@ -33,12 +33,6 @@
             this.textBoxLastUpdate = new System.Windows.Forms.TextBox();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isinDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tickerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pctDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stockBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataSet = new System.Data.DataSet();
             this.stocksNameTable = new System.Data.DataTable();
@@ -62,6 +56,13 @@
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.label_gain = new System.Windows.Forms.Label();
             this.comboBoxTheme = new System.Windows.Forms.ComboBox();
+            this.marketDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isinDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tickerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pctDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
@@ -74,7 +75,7 @@
             // textBoxLastUpdate
             // 
             this.textBoxLastUpdate.Location = new System.Drawing.Point(473, 20);
-            this.textBoxLastUpdate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxLastUpdate.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxLastUpdate.Name = "textBoxLastUpdate";
             this.textBoxLastUpdate.ReadOnly = true;
             this.textBoxLastUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -84,7 +85,7 @@
             // buttonLoad
             // 
             this.buttonLoad.Location = new System.Drawing.Point(20, 20);
-            this.buttonLoad.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonLoad.Margin = new System.Windows.Forms.Padding(6);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(159, 42);
             this.buttonLoad.TabIndex = 2;
@@ -100,6 +101,7 @@
             this.dataGridView.AutoGenerateColumns = false;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.marketDataGridViewTextBoxColumn,
             this.idDataGridViewTextBoxColumn,
             this.isinDataGridViewTextBoxColumn,
             this.tickerDataGridViewTextBoxColumn,
@@ -108,7 +110,7 @@
             this.pctDataGridViewTextBoxColumn});
             this.dataGridView.DataSource = this.stockBindingSource;
             this.dataGridView.Location = new System.Drawing.Point(22, 124);
-            this.dataGridView.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(6);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersVisible = false;
@@ -118,65 +120,6 @@
             this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewCellDoubleClick);
             this.dataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridViewCellFormatting);
             this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridViewCellMouseDown);
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.MinimumWidth = 9;
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            this.idDataGridViewTextBoxColumn.Width = 175;
-            // 
-            // isinDataGridViewTextBoxColumn
-            // 
-            this.isinDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.isinDataGridViewTextBoxColumn.DataPropertyName = "Isin";
-            this.isinDataGridViewTextBoxColumn.HeaderText = "Isin";
-            this.isinDataGridViewTextBoxColumn.MinimumWidth = 9;
-            this.isinDataGridViewTextBoxColumn.Name = "isinDataGridViewTextBoxColumn";
-            this.isinDataGridViewTextBoxColumn.ReadOnly = true;
-            this.isinDataGridViewTextBoxColumn.Width = 83;
-            // 
-            // tickerDataGridViewTextBoxColumn
-            // 
-            this.tickerDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.tickerDataGridViewTextBoxColumn.DataPropertyName = "Ticker";
-            this.tickerDataGridViewTextBoxColumn.HeaderText = "Ticker";
-            this.tickerDataGridViewTextBoxColumn.MinimumWidth = 9;
-            this.tickerDataGridViewTextBoxColumn.Name = "tickerDataGridViewTextBoxColumn";
-            this.tickerDataGridViewTextBoxColumn.ReadOnly = true;
-            this.tickerDataGridViewTextBoxColumn.Width = 107;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.MinimumWidth = 9;
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // valueDataGridViewTextBoxColumn
-            // 
-            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-            this.valueDataGridViewTextBoxColumn.HeaderText = "Value";
-            this.valueDataGridViewTextBoxColumn.MinimumWidth = 9;
-            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
-            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
-            this.valueDataGridViewTextBoxColumn.Width = 104;
-            // 
-            // pctDataGridViewTextBoxColumn
-            // 
-            this.pctDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.pctDataGridViewTextBoxColumn.DataPropertyName = "Pct";
-            this.pctDataGridViewTextBoxColumn.HeaderText = "Pct";
-            this.pctDataGridViewTextBoxColumn.MinimumWidth = 9;
-            this.pctDataGridViewTextBoxColumn.Name = "pctDataGridViewTextBoxColumn";
-            this.pctDataGridViewTextBoxColumn.ReadOnly = true;
-            this.pctDataGridViewTextBoxColumn.Width = 81;
             // 
             // stockBindingSource
             // 
@@ -251,7 +194,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(642, 343);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(214, 133);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -308,7 +251,7 @@
             this.comboBoxTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTime.FormattingEnabled = true;
             this.comboBoxTime.Location = new System.Drawing.Point(303, 20);
-            this.comboBoxTime.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxTime.Margin = new System.Windows.Forms.Padding(6);
             this.comboBoxTime.Name = "comboBoxTime";
             this.comboBoxTime.Size = new System.Drawing.Size(156, 32);
             this.comboBoxTime.TabIndex = 7;
@@ -317,7 +260,7 @@
             // buttonUpdate
             // 
             this.buttonUpdate.Location = new System.Drawing.Point(191, 20);
-            this.buttonUpdate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonUpdate.Margin = new System.Windows.Forms.Padding(6);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(100, 42);
             this.buttonUpdate.TabIndex = 8;
@@ -339,7 +282,7 @@
             // 
             this.textBoxSearch.ForeColor = System.Drawing.Color.Gray;
             this.textBoxSearch.Location = new System.Drawing.Point(24, 74);
-            this.textBoxSearch.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxSearch.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(264, 29);
             this.textBoxSearch.TabIndex = 10;
@@ -362,11 +305,79 @@
             this.comboBoxTheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTheme.FormattingEnabled = true;
             this.comboBoxTheme.Location = new System.Drawing.Point(691, 20);
-            this.comboBoxTheme.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxTheme.Margin = new System.Windows.Forms.Padding(6);
             this.comboBoxTheme.Name = "comboBoxTheme";
             this.comboBoxTheme.Size = new System.Drawing.Size(140, 32);
             this.comboBoxTheme.TabIndex = 12;
             this.comboBoxTheme.SelectionChangeCommitted += new System.EventHandler(this.comboBoxThemeSelectedIndexChanged);
+            // 
+            // marketDataGridViewTextBoxColumn
+            // 
+            this.marketDataGridViewTextBoxColumn.DataPropertyName = "Market";
+            this.marketDataGridViewTextBoxColumn.HeaderText = "Market";
+            this.marketDataGridViewTextBoxColumn.MinimumWidth = 9;
+            this.marketDataGridViewTextBoxColumn.Name = "marketDataGridViewTextBoxColumn";
+            this.marketDataGridViewTextBoxColumn.ReadOnly = true;
+            this.marketDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.MinimumWidth = 9;
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
+            this.idDataGridViewTextBoxColumn.Visible = false;
+            this.idDataGridViewTextBoxColumn.Width = 175;
+            // 
+            // isinDataGridViewTextBoxColumn
+            // 
+            this.isinDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.isinDataGridViewTextBoxColumn.DataPropertyName = "Isin";
+            this.isinDataGridViewTextBoxColumn.HeaderText = "Isin";
+            this.isinDataGridViewTextBoxColumn.MinimumWidth = 9;
+            this.isinDataGridViewTextBoxColumn.Name = "isinDataGridViewTextBoxColumn";
+            this.isinDataGridViewTextBoxColumn.ReadOnly = true;
+            this.isinDataGridViewTextBoxColumn.Width = 83;
+            // 
+            // tickerDataGridViewTextBoxColumn
+            // 
+            this.tickerDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.tickerDataGridViewTextBoxColumn.DataPropertyName = "Ticker";
+            this.tickerDataGridViewTextBoxColumn.HeaderText = "Ticker";
+            this.tickerDataGridViewTextBoxColumn.MinimumWidth = 9;
+            this.tickerDataGridViewTextBoxColumn.Name = "tickerDataGridViewTextBoxColumn";
+            this.tickerDataGridViewTextBoxColumn.ReadOnly = true;
+            this.tickerDataGridViewTextBoxColumn.Width = 107;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.MinimumWidth = 9;
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // valueDataGridViewTextBoxColumn
+            // 
+            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+            this.valueDataGridViewTextBoxColumn.HeaderText = "Value";
+            this.valueDataGridViewTextBoxColumn.MinimumWidth = 9;
+            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
+            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
+            this.valueDataGridViewTextBoxColumn.Width = 104;
+            // 
+            // pctDataGridViewTextBoxColumn
+            // 
+            this.pctDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.pctDataGridViewTextBoxColumn.DataPropertyName = "Pct";
+            this.pctDataGridViewTextBoxColumn.HeaderText = "Pct";
+            this.pctDataGridViewTextBoxColumn.MinimumWidth = 9;
+            this.pctDataGridViewTextBoxColumn.Name = "pctDataGridViewTextBoxColumn";
+            this.pctDataGridViewTextBoxColumn.ReadOnly = true;
+            this.pctDataGridViewTextBoxColumn.Width = 81;
             // 
             // MainForm
             // 
@@ -385,7 +396,7 @@
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.textBoxLastUpdate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "MainForm";
             this.Text = "InfoBourse - By Jean";
             this.Resize += new System.EventHandler(this.MainFormResize);
@@ -423,18 +434,19 @@
         private System.Data.DataColumn IdColumn;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Label label_valo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn isinDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tickerDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn pctDataGridViewTextBoxColumn;
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.ToolStripMenuItem buyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sellToolStripMenuItem;
         private System.Windows.Forms.Label label_gain;
         private System.Data.DataColumn HighlightColumn;
         private System.Windows.Forms.ComboBox comboBoxTheme;
+        private System.Windows.Forms.DataGridViewTextBoxColumn marketDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn isinDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tickerDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pctDataGridViewTextBoxColumn;
     }
 }
 
